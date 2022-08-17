@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "1052185938893",
+    "firebase_url": "https://rencontres-a1ece.firebaseio.com",
+    "project_id": "rencontres-a1ece",
+    "storage_bucket": "rencontres-a1ece.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052185938893:android:28ea5293bc219a61531284",
+        "android_client_info": {
+          "package_name": "com.lnd.RencontreAfricaine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5OnXyi0EjJ2G-c1LA77utZCKyfsV-3Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052185938893:android:dbe09165bbb58d5f531284",
+        "android_client_info": {
+          "package_name": "com.lnd.renconters"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5OnXyi0EjJ2G-c1LA77utZCKyfsV-3Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052185938893:android:6195c8a304e627b0531284",
+        "android_client_info": {
+          "package_name": "com.lnd.serverrencontres"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5OnXyi0EjJ2G-c1LA77utZCKyfsV-3Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052185938893-vcvb0eu8jfr5ulsst8d089m7gkn4o653.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
