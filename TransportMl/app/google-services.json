@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1041041321771",
+    "project_id": "transportml",
+    "storage_bucket": "transportml.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041041321771:android:cbcc92836d7f02f7dc9f6e",
+        "android_client_info": {
+          "package_name": "com.example.transportml"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041041321771-0fi4aod5h6nof9vcdls9mrc7dbpbfrsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9KQ6D7nwihoUAEeFsXfujh58Dfj-kP8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041041321771-0fi4aod5h6nof9vcdls9mrc7dbpbfrsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
