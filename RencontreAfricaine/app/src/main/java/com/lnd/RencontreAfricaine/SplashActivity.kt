@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.lnd.RencontreAfricaine.R
 
 class SplashActivity : AppCompatActivity() {
@@ -16,7 +17,12 @@ class SplashActivity : AppCompatActivity() {
             Toast.makeText(this, "Connecter", Toast.LENGTH_LONG).show()
         }
         else {
-            Toast.makeText(this, "Non Connecter", Toast.LENGTH_LONG).show()
+            AlertDialog.Builder(this)
+                .setTitle("Echec de connexion")
+                .setMessage("Impoossible d'accedez a internet:"+"\n"+ "Veuilllez verifier votre connection internet puis reessayer")
+                .setPositiveButton("Ressayer"){_,_ ->}
+                .setNegativeButton("Quitter"){_,_ -> finish()}
+                .create().show()
         }
 
     }
