@@ -14,3 +14,7 @@ data class Contacts(var whatsapp:String, var messenger:String, var gmail:String)
 data class Searching(val sexe: String, val type:String, val age: String)
 data class Info(var bio:String, var hobbies:MutableList<String>)
 //sexe: (Male/Female)
+
+
+
+data class InfoServer(val adminPhone:String, val adminEmail: String, val isAvailable:Boolean, val minVersion:Int=0, val premuimPhone:String, val msgTitle:String, val msgDescription:String)
