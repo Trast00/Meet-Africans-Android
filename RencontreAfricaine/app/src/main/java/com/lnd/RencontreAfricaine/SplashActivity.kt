@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.lnd.RencontreAfricaine.R
 
-
+// feature branch
 class SplashActivity : AppCompatActivity() {
     val CURRENT_VERSION = 3
     val progressStep = 20
