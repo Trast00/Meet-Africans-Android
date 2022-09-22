@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +21,7 @@ class SplashActivity : AppCompatActivity() {
     val CURRENT_VERSION = 3
     val progressStep = 20
 
+    val TAG = "SplachActivity"
     lateinit var progress : ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,10 @@ class SplashActivity : AppCompatActivity() {
 
     var userID = ""
     private fun unit(step:Int) {
+        Log.d(TAG, "unit")
         //Check Internet connection && Get InfoServer
         if (step==0){
+            //if internet is on: Get InfoServer
             if (checkConnectionType()){
                 Toast.makeText(this, "Connecter", Toast.LENGTH_LONG).show()
                 getInfoServer()
@@ -59,6 +63,9 @@ class SplashActivity : AppCompatActivity() {
                 unit(2)
             }
         }
+        else if (step==3){
+            getInfoServer()
+        }
 
     }
 
@@ -80,11 +87,11 @@ class SplashActivity : AppCompatActivity() {
 
     var infoServer: InfoServer? =null
     fun getInfoServer(){
-        val fb = FirebaseDatabase.getInstance().reference.child("InfoServer")
-        fb.addListenerForSingleValueEvent(object : ValueEventListener {
+        FirebaseDatabase.getInstance().reference.child("InfoServer")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
-
+                    Log.d(TAG, "fb addSL")
                     val adminPhone = snapshot.child("adminPhone").value.toString()
                     val adminEmail = snapshot.child("adminEmail").value.toString()
                     val isAvailable = snapshot.child("isAvailable").value.toString().toBoolean()
@@ -99,6 +106,7 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
 
+
             override fun onCancelled(error: DatabaseError) {}
 
         })
@@ -106,27 +114,31 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun updateNeeded(minVersion: Int) {
-        AlertDialog.Builder(this)
-            .setTitle("Mise a jours  requise")
-            .setMessage("Une nouvelle version de l'application est disponible ! \nTelecharger la afin d'acceder au derniere fonctionnalité !")
-            .setPositiveButton("Mettre a jours"){_,_ ->
-                updateNeeded(minVersion)
-            }
-            .setNegativeButton("Quitter"){_,_ -> finish()}
-            .setCancelable(false)
-            .create().show()
+        if (minVersion>CURRENT_VERSION){
+            AlertDialog.Builder(this)
+                .setTitle("Mise a jours  requise")
+                .setMessage("Une nouvelle version de l'application est disponible ! \nTelecharger la afin d'acceder au derniere fonctionnalité !")
+                .setPositiveButton("Mettre a jours"){_,_ ->
+                    updateNeeded(minVersion)
+                }
+                .setNegativeButton("Quitter"){_,_ -> finish()}
+                .setCancelable(false)
+                .create().show()
+        }
     }
 
     private fun appDisabled(available: Boolean) {
-        AlertDialog.Builder(this)
-            .setTitle("L application est desactivé")
-            .setMessage("L'application est actuellement desactivé pour des problemes de maintenance !" +
-                    "\n\nContactez nous si vous avez des question:" +
-                    "\nEmail: ${infoServer?.adminEmail}" +
-                    "\nNumero de telephone: ${infoServer?.adminPhone}")
-            .setNegativeButton("Quitter"){_,_ -> finish()}
-            .setCancelable(false)
-            .create().show()
+        if (!available){
+            AlertDialog.Builder(this)
+                .setTitle("L application est desactivé")
+                .setMessage("L'application est actuellement desactivé pour des problemes de maintenance !" +
+                        "\n\nContactez nous si vous avez des question:" +
+                        "\nEmail: ${infoServer?.adminEmail}" +
+                        "\nNumero de telephone: ${infoServer?.adminPhone}")
+                .setNegativeButton("Quitter"){_,_ -> finish()}
+                .setCancelable(false)
+                .create().show()
+        }
 
     }
 
