@@ -1,6 +1,7 @@
 package com.lnd.RencontreAfricaine
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -40,9 +41,9 @@ class SplashActivity : AppCompatActivity() {
         if (step==0){
             //if internet is on: Get InfoServer
             if (checkConnectionType()){
-                Toast.makeText(this, "Connecter", Toast.LENGTH_LONG).show()
+                progress.progress = 20
                 getInfoServer()
-
+                progress.progress = 40
             }
             else {
                 AlertDialog.Builder(this)
@@ -60,12 +61,16 @@ class SplashActivity : AppCompatActivity() {
         else if (step==1){
             if (FirebaseAuth.getInstance().currentUser!=null){
                 userID = FirebaseAuth.getInstance().currentUser!!.uid
-                unit(2)
+                progress.progress = 100
+                startActivity(Intent(this, MainActivity::class.java))
             }
+            else{
+                progress.progress = 100
+                startActivity(Intent(this, TutoActivity::class.java))
+            }
+            finish()
         }
-        else if (step==3){
-            getInfoServer()
-        }
+
 
     }
 
