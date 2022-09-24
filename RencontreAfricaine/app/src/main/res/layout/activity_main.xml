@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.RencontreAfricaine.AppBarOverlay">
 
+        Text
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
