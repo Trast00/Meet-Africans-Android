@@ -62,7 +62,9 @@
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:id="@+id/cardboy"
-            android:src="@drawable/cardboy_tuto"/>
+            android:src="@drawable/cardboy_tuto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/const3"
         app:layout_constraintTop_toBottomOf="@id/const2">
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
@@ -89,6 +92,15 @@
 
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btnstart"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/const3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
