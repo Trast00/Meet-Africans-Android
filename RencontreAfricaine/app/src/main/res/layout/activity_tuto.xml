@@ -36,7 +36,140 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/cardgirl">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgRing"
+                android:src="@drawable/iconsring"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/imgFlower"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgFlower"
+                android:src="@drawable/iconsflower"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toTopOf="@id/imgHeart"
+                app:layout_constraintTop_toBottomOf="@id/imgRing"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgHeart"
+                android:src="@drawable/iconsheart"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgFlower"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mariage"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgRing"
+                app:layout_constraintBottom_toBottomOf="@id/imgRing"
+                app:layout_constraintTop_toTopOf="@id/imgRing"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Relation \n Serieuse"
+                android:textColor="@color/text_black"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgFlower"
+                app:layout_constraintBottom_toBottomOf="@id/imgFlower"
+                app:layout_constraintTop_toTopOf="@id/imgFlower"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amour"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgHeart"
+                app:layout_constraintBottom_toBottomOf="@id/imgHeart"
+                app:layout_constraintTop_toTopOf="@id/imgHeart"/>
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amitié"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgHeartYellow"
+                app:layout_constraintBottom_toBottomOf="@id/imgRing"
+                app:layout_constraintTop_toTopOf="@id/imgRing"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sexe"
+                android:textColor="@color/text_black"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgSexe"
+                app:layout_constraintBottom_toBottomOf="@id/imgFlower"
+                app:layout_constraintTop_toTopOf="@id/imgFlower"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inconnue"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgUnknown"
+                app:layout_constraintBottom_toBottomOf="@id/imgHeart"
+                app:layout_constraintTop_toTopOf="@id/imgHeart"/>
+
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgHeartYellow"
+                android:src="@drawable/iconsfriend"
+                android:layout_marginEnd="70dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/imgFlower"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgSexe"
+                android:src="@drawable/iconssex"
+                android:layout_marginEnd="70dp"
+                app:layout_constraintBottom_toTopOf="@id/imgHeart"
+                app:layout_constraintTop_toBottomOf="@id/imgRing"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgUnknown"
+                android:src="@drawable/iconsunknown"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgFlower"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
