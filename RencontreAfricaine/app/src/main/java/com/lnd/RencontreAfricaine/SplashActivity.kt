@@ -30,7 +30,8 @@ class SplashActivity : AppCompatActivity() {
 
         progress = findViewById(R.id.progress)
         progress.progress = 0
-        unit(0)
+        startActivity(Intent(this, RegisterActivity::class.java))
+        //unit(0)
 
     }
 
