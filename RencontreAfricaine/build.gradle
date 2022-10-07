@@ -7,15 +7,15 @@ buildscript {
         mavenCentral()  // Maven Central repository
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.13' // Google Services plugin
     }
 }
 
 plugins {
-    id 'com.android.application' version '7.2.1' apply false
-    id 'com.android.library' version '7.2.1' apply false
+    id 'com.android.application' version '7.3.0' apply false
+    id 'com.android.library' version '7.3.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
 
 }

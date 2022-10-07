@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -22,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
     val CURRENT_VERSION = 3
     val progressStep = 20
 
-    val TAG = "SplachActivity"
+    private val TAG = "SplachActivity"
     lateinit var progress : ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
 
         progress = findViewById(R.id.progress)
         progress.progress = 0
+        //startActivity(Intent(this, RegisterActivity::class.java))
         unit(0)
 
     }
@@ -59,16 +61,19 @@ class SplashActivity : AppCompatActivity() {
         }
         //check authentification
         else if (step==1){
-            if (FirebaseAuth.getInstance().currentUser!=null){
-                userID = FirebaseAuth.getInstance().currentUser!!.uid
-                progress.progress = 100
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-            else{
-                progress.progress = 100
-                startActivity(Intent(this, TutoActivity::class.java))
-            }
-            finish()
+            Handler(Looper.getMainLooper())
+                .postDelayed({
+                    if (FirebaseAuth.getInstance().currentUser!=null){
+                        userID = FirebaseAuth.getInstance().currentUser!!.uid
+                        progress.progress = 100
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
+                    else{
+                        progress.progress = 100
+                        startActivity(Intent(this, TutoActivity::class.java))
+                    }
+                    finish()
+            }, 500)
         }
 
 
@@ -96,7 +101,7 @@ class SplashActivity : AppCompatActivity() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
-                    Log.d(TAG, "fb addSL")
+                    Log.d("SplacheActivity", "fb addSL")
                     val adminPhone = snapshot.child("adminPhone").value.toString()
                     val adminEmail = snapshot.child("adminEmail").value.toString()
                     val isAvailable = snapshot.child("isAvailable").value.toString().toBoolean()
@@ -108,6 +113,7 @@ class SplashActivity : AppCompatActivity() {
                     infoServer = InfoServer(adminPhone, adminEmail, isAvailable, minVersion, premuimPhone, title, description)
                     appDisabled(isAvailable)
                     updateNeeded(minVersion)
+                    unit(1)
                 }
             }
 

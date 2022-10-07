@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lnd.RencontreAfricaine">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -17,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RencontreAfricaine"
         tools:targetApi="31">
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".TutoActivity"
             android:exported="false" />
@@ -33,7 +40,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RencontreAfricaine.NoActionBar"></activity>
+            android:theme="@style/Theme.RencontreAfricaine.NoActionBar" />
     </application>
 
 </manifest>

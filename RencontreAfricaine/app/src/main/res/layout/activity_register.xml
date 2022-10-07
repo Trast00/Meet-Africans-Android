@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_screen"
+    android:nestedScrollingEnabled="true"
+    tools:context=".RegisterActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_white"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/constInscription"
+        android:layout_marginTop="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTitle"
+            android:text="Incription"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Numero de telephone"
+            app:startIconDrawable="@drawable/iconsphone"
+            app:prefixText="+223"
+            android:id="@+id/edlayoutPhone"
+            android:layout_width="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edPhoneInscription"
+                android:inputType="phone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Mot de passe "
+            app:startIconDrawable="@drawable/iconscadena"
+            android:id="@+id/edlayoutPassword"
+            android:layout_width="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutPhone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edpasswordInscription"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Confirmer le mot de passe"
+            app:startIconDrawable="@drawable/iconscadena"
+            android:id="@+id/edlayoutPasswordConfirm"
+            android:layout_width="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edpasswordConfirmInscription"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnInscription"
+            android:src="@drawable/btnregister"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutPasswordConfirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connexion"
+            android:id="@+id/btnGoConnexion"
+            android:textColor="@color/text_purple"
+            app:layout_constraintTop_toBottomOf="@id/btnInscription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/constConnexion"
+        android:layout_marginTop="250dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTitle2"
+            android:text="Connexion"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Numero de telephone"
+            app:startIconDrawable="@drawable/iconsphone"
+            app:prefixText="+223"
+            android:id="@+id/edlayoutPhoneConnexion"
+            android:layout_width="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edPhoneConnexion"
+                android:inputType="phone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Mot de passe "
+            app:startIconDrawable="@drawable/iconscadena"
+            android:id="@+id/edlayoutPasswordConnexion"
+            android:layout_width="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:endIconMode="password_toggle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutPhoneConnexion">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edpasswordConnexion"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnConnexion"
+            android:src="@drawable/btnconnexion"
+            android:layout_marginTop="85dp"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutPasswordConnexion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inscription"
+            android:id="@+id/btnGoInscription"
+            android:textColor="@color/text_purple"
+            app:layout_constraintTop_toBottomOf="@id/btnConnexion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Besoin d'aide ? Cliquer ici pour Contactez nous !\nWhatsApp: +213 93 36 66 87"
+        android:textColor="@color/text_purple"
+        android:textAlignment="center"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:visibility="invisible"
+        android:layout_marginTop="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

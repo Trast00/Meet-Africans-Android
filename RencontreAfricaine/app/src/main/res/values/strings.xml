@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">RencontreAfricaine</string>
+    <string name="app_name">Rencontre Africaine</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="madeby">Made by: dickoallassane1997@gmail.com - LND Afrique</string>
     <string name="danstouteafrique">Déjà dans toute l\'Afrique de l\'Ouest</string>
+    <string name="warning1">***Les contactes sont facultative mais très utile pour augmenter vos chance de rencontré l\'âme sœur</string>
+    <string name="check1">J\'accepte d\'être contactez par Email, Messenger et WhatsApp par les autre utilisateur</string>
+    <string name="txt2">Appuyez sur retour pour modifier ou supprimer de informations</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
