@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         val newUserData: HashMap<String, String>? = null //id, phone, mdp, key
     }
 
+    //Comment
     private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
