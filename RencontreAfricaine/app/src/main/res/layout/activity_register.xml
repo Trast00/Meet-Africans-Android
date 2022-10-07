@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/register_screen"
+    android:nestedScrollingEnabled="true"
     tools:context=".RegisterActivity">
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo_white"
+        android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -64,7 +66,6 @@
             android:layout_height="wrap_content"
             android:hint="Mot de passe "
             app:startIconDrawable="@drawable/iconscadena"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPassword"
             android:layout_width="0dp"
             android:layout_marginTop="15dp"
@@ -88,7 +89,6 @@
             android:layout_height="wrap_content"
             android:hint="Confirmer le mot de passe"
             app:startIconDrawable="@drawable/iconscadena"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPasswordConfirm"
             android:layout_width="0dp"
             android:layout_marginTop="15dp"
@@ -180,7 +180,6 @@
             android:layout_height="wrap_content"
             android:hint="Mot de passe "
             app:startIconDrawable="@drawable/iconscadena"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPasswordConnexion"
             android:layout_width="0dp"
             android:layout_marginTop="15dp"

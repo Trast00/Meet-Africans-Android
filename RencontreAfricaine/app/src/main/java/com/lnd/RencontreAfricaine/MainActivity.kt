@@ -6,13 +6,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lnd.RencontreAfricaine.databinding.ActivityMainBinding
 
-
-
-import com.lnd.RencontreAfricaine.ui.main.SectionsPagerAdapter
+import com.lnd.RencontreAfricaine.ui.main.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        val newUserData: HashMap<String, String>? = null //id, phone, mdp, key
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -22,16 +25,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
-        val fab: FloatingActionButton = binding.fab
+        val viewPager2 = findViewById<ViewPager2>(R.id.view_pager2)
+        val tabLayout = findViewById<TabLayout>(R.id.tabs)
+        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        viewPager2.adapter = adapter
+        TabLayoutMediator(tabLayout, viewPager2){tab, position ->
+            when(position){
+                0->{tab.text = "Disc."}
+                1->{tab.text = "Event"}
+                2->{tab.text = "Chats"}
+            }
+        }.attach()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 }

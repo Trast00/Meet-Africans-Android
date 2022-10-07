@@ -3,6 +3,8 @@ package com.lnd.RencontreAfricaine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -82,7 +84,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
             }
             else{finishRegister(mauth.currentUser?.uid.toString(), phone)}
-
         }
 
         btnConnexion.setOnClickListener {
@@ -90,7 +91,59 @@ class RegisterActivity : AppCompatActivity() {
             constConnexion.isEnabled = false
             progress.isVisible = true
 
+            val phone = edPhoneConnexion.text.toString()
+            val email = edPhoneConnexion.text.toString()+"@gmail.com"
+            val password = edPasswordConnexion.text.toString()
 
+            if (mauth.currentUser==null){
+                mauth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener{
+                        progress.isVisible = false
+                        constInscription.isVisible = true
+                        constInscription.isEnabled = true
+                    }
+                    .addOnSuccessListener {
+                        val id = mauth.currentUser?.uid.toString()
+                        finishRegister(id, phone)
+                    }
+                    .addOnFailureListener {
+                        AlertDialog.Builder(this)
+                            .setTitle("Erreur")
+                            .setMessage("Une erreur c'est produite lors de la connection, ressayer !" +
+                                    "\n\n-Verifier votre connexion internet !" +
+                                    "\n-Verifier votre numero de telephone et mot de passe")
+                            .setCancelable(false)
+                            .setPositiveButton("Ressayer"){_,_-> }
+                            .create().show()
+                    }
+            }
+
+        }
+
+        btnGoInscription.setOnClickListener {
+            progress.isVisible = true
+            constConnexion.isVisible = false
+            constConnexion.isEnabled = false
+
+            Handler(Looper.getMainLooper())
+                .postDelayed({
+                    progress.isVisible = false
+                    constInscription.isVisible = true
+                    constInscription.isEnabled = true
+                }, 300)
+        }
+
+        btnGoConnexion.setOnClickListener {
+            progress.isVisible = true
+            constInscription.isVisible = false
+            constInscription.isEnabled = false
+
+            Handler(Looper.getMainLooper())
+                .postDelayed({
+                    progress.isVisible = false
+                    constConnexion.isVisible = true
+                    constConnexion.isEnabled = true
+                }, 300)
         }
     }
 
@@ -129,7 +182,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     val fb = FirebaseDatabase.getInstance().reference.child("NewUsers")
-
     private fun checkValidity(phone: String, password: String, passwordConfirm: String?):String?{
         if (phone.length<6 || phone.length>15){return "Le numero de telephone doit contenir au minimum 6 chiffre et au maximum 15"}
         if (password.length<6){return "Le mot de passe doit contenir au moins 6 caractere"}

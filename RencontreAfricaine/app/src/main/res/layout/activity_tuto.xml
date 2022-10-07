@@ -364,6 +364,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/btnStart"
         android:src="@drawable/btnstart"
         android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@id/const3"
