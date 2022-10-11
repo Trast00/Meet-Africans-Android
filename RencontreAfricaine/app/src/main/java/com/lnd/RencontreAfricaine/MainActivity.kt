@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         val currentUser: Users? = null
     }
 
-    //Comment
+    //Comment 2
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
