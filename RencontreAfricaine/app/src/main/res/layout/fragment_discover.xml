@@ -6,64 +6,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.DiscoverFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true">
-        <Spinner
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:id="@+id/spinnerSex"
-            tools:listitem="@layout/itemfilter"
-            android:layout_margin="8dp"
-            android:background="@null"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/spinnerLocalisation"
-            />
-
-        <Spinner
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:id="@+id/spinnerLocalisation"
-            tools:listitem="@layout/itemfilter"
-            android:layout_margin="8dp"
-            android:background="@null"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/spinnerRelation"
-            app:layout_constraintStart_toEndOf="@id/spinnerSex"
-            />
-
-        <Spinner
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:id="@+id/spinnerRelation"
-            tools:listitem="@layout/itemfilter"
-            android:layout_margin="8dp"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/spinnerLocalisation"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerProfile"
-            android:layout_marginTop="15dp"
-            tools:listitem="@layout/itemprofile"
-            tools:itemCount="1"
-            app:layout_constraintTop_toBottomOf="@id/spinnerSex"/>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:nestedScrollingEnabled="true">
+            <Spinner
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:id="@+id/spinnerSex"
+                tools:listitem="@layout/itemfilter"
+                android:layout_margin="8dp"
+                android:background="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/spinnerLocalisation"
+                />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progress"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerProfile"/>
+            <Spinner
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:id="@+id/spinnerLocalisation"
+                tools:listitem="@layout/itemfilter"
+                android:layout_margin="8dp"
+                android:background="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/spinnerRelation"
+                app:layout_constraintStart_toEndOf="@id/spinnerSex"
+                />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Spinner
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:id="@+id/spinnerRelation"
+                tools:listitem="@layout/itemfilter"
+                android:layout_margin="8dp"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinnerLocalisation"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerProfile"
+                android:layout_marginTop="15dp"
+                tools:listitem="@layout/itemprofile"
+                tools:itemCount="1"
+                app:layout_constraintTop_toBottomOf="@id/spinnerSex"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerProfile"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:id="@+id/btnShowMore"
+                android:text="Voir Plus"
+                android:textColor="@color/white"
+                android:background="@drawable/backgroundbtn"
+                app:layout_constraintTop_toTopOf="@id/progress"
+                app:layout_constraintBottom_toBottomOf="@id/progress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

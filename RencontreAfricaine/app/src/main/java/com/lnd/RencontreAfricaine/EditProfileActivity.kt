@@ -168,14 +168,14 @@ class EditProfileActivity : AppCompatActivity() {
             imgSexWomen.setImageResource(R.drawable.women_no)
 
             Toast.makeText(this, "Je suis un Homme", Toast.LENGTH_LONG).show()
-            selectedSex = "Male"
+            selectedSex = "Homme"
         }
         imgSexWomen.setOnClickListener {
             imgSexMen.setImageResource(R.drawable.men_no)
             imgSexWomen.setImageResource(R.drawable.women_yes)
 
             Toast.makeText(this, "Je suis une Femme", Toast.LENGTH_LONG).show()
-            selectedSex = "Female"
+            selectedSex = "Femme"
         }
 
         //Listener Select Profile Image
@@ -344,6 +344,8 @@ class EditProfileActivity : AppCompatActivity() {
     private fun finishEdit(){
         val newMapData: MutableMap<String, Any?> = HashMap()
         val newMapStatue: MutableMap<String, Any?>  = HashMap()
+        //in user Info
+        val newMapContact: MutableMap<String, Any?>  = HashMap()
         //Register //prefer map then userData
         newMapData["id"] = MainActivity.newUserData!!["id"]
         newMapData["phone"] = MainActivity.newUserData["phone"]
@@ -362,7 +364,26 @@ class EditProfileActivity : AppCompatActivity() {
         newMapStatue["connected"] = true
         newMapStatue["premiumDays"] = 0
 
-        mUserRef
+        //user Contact
+        newMapContact["gmail"] = ""
+        newMapContact["whatsapp"] = ""
+        newMapContact["messenger"] = ""
+        if (edWhatsapp.text.toString().isNotEmpty() &&
+            edWhatsapp.text.toString()!="null"){
+            newMapContact["whatsapp"] = edWhatsapp.text.toString()
+        }
+        if (edMessenger.text.toString().isNotEmpty() &&
+            edMessenger.text.toString()!="null"){
+            newMapContact["messenger"] = edMessenger.text.toString()
+        }
+        if (edGmail.text.toString().isNotEmpty() &&
+            edGmail.text.toString()!="null"){
+            newMapContact["gmail"] = edGmail.text.toString()
+        }
+
+        mUserRef.child("userData").updateChildren(newMapData)
+        mUserRef.child("userInfo").child("contact").updateChildren(newMapContact)
+        mUserRef.child("userInfo").child("searching")
 
         //add a tout les user les donnée: localisation, language
     }
@@ -418,6 +439,51 @@ class EditProfileActivity : AppCompatActivity() {
             btnBack.isEnabled = true
             btnBack.setOnClickListener {
                 goStep(step-1)
+            }
+        }
+
+        if(step==6){
+            //Loaded data to confirm
+            Glide.with(this).clear(imgProfile)
+            Glide.with(this).load(mImageUri).into(imgProfile)
+            txtCountry.text = ""
+            txtIsOnline.text = "En ligne"
+            txtName.text = edName.text.toString()
+            txtName2.text = edName.text.toString()
+            txtSexAge.text = "$selectedSex - ${edAge.text} ans"
+
+            if (edGmail.text!!.isNotEmpty()){
+                txtGmail.text = edGmail.text
+                txtGmail.isVisible = true
+                findViewById<ImageView>(R.id.imgnoGmail).isVisible = true
+            }else{
+                txtGmail.isVisible = false
+                findViewById<ImageView>(R.id.imgnoGmail).isVisible = false
+            }
+            if (edWhatsapp.text!!.isNotEmpty()){
+                txtWhatsapp.text = edWhatsapp.text
+                txtWhatsapp.isVisible = true
+                findViewById<ImageView>(R.id.imgnoWhatsapp).isVisible = true
+            }else{
+                txtWhatsapp.isVisible = false
+                findViewById<ImageView>(R.id.imgnoWhatsapp).isVisible = false
+            }
+            if (edMessenger.text!!.isNotEmpty()){
+                txtMessenger.text = edMessenger.text
+                txtMessenger.isVisible = true
+                findViewById<ImageView>(R.id.imgnoMessenger).isVisible = true
+            }else{
+                txtMessenger.isVisible = false
+                findViewById<ImageView>(R.id.imgnoMessenger).isVisible = false
+            }
+
+            when(selectedSex){
+                "Marriage"->imgWanted.setImageResource(R.drawable.iconsring)
+                "Relation Serieuse"->imgWanted.setImageResource(R.drawable.iconsflower)
+                "Amour"->imgWanted.setImageResource(R.drawable.iconsheart)
+                "Amitie"->imgWanted.setImageResource(R.drawable.iconsfriend)
+                "Relation Sexuel"->imgWanted.setImageResource(R.drawable.iconssex)
+                "Inconnue"->imgWanted.setImageResource(R.drawable.iconsunknown)
             }
         }
 
