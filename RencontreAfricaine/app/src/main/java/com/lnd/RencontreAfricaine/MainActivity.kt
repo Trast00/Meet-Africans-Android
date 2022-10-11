@@ -14,7 +14,8 @@ import com.lnd.RencontreAfricaine.ui.main.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val newUserData: HashMap<String, String>? = null //id, phone, mdp, key
+        val newUserData: HashMap<String, Any>? = null //id, phone, mdp, key
+        val currentUser: Users? = null
     }
 
     //Comment

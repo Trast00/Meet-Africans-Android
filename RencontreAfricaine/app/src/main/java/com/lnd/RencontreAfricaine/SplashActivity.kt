@@ -33,7 +33,52 @@ class SplashActivity : AppCompatActivity() {
         progress.progress = 0
         //startActivity(Intent(this, RegisterActivity::class.java))
         unit(0)
+        //correctData()
 
+    }
+
+    private fun correctData() {
+        //relation, localisation, language
+        val listUser : MutableList<UserData> = mutableListOf()
+        FirebaseDatabase.getInstance().reference.child("Users")
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        for (h0 in snapshot.children){
+                            val newMap : MutableMap<String, Any> = HashMap()
+                            if (h0.child("userChats").exists()){
+                                for (h1 in h0.child("userChats").children){
+                                    val id = h1.key.toString()
+                                    newMap["id"] = h1.key.toString()
+                                    newMap["phone"] = ""
+                                    newMap["nom"] = h1.child("name").value.toString()
+                                    newMap["prenom"] = ""
+                                    newMap["age"] = 18
+                                    newMap["sexe"] = "Unknown"
+                                    newMap["mdp"] = ""
+                                    newMap["imgProfileUrl"] = h1.child("imgProfile").value.toString()
+
+                                    newMap["relation"] = ""
+                                    newMap["localisation"] = ""
+                                    newMap["language"] = ""
+
+                                    FirebaseDatabase.getInstance().reference.child("Users")
+                                        .child(id).child("userData").setValue(newMap)
+                                }
+                            }
+                            /*
+                            newMap["relation"] = ""
+                            newMap["localisation"] = ""
+                            newMap["language"] = ""
+                            FirebaseDatabase.getInstance().reference.child("Users")
+                                .child(id).child("userData").setValue(newMap)*/
+                        }
+                        Toast.makeText(this@SplashActivity, "DONE", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     var userID = ""

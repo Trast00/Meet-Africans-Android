@@ -20,6 +20,8 @@
                 android:layout_height="250dp"
                 android:id="@+id/imgProfileItemProfile"
                 android:src="@color/purple_200"
+                android:background="@color/purple_200"
+                android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
@@ -39,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtCountryItemProfile"
+                android:visibility="invisible"
                 android:text="Pays"
                 android:textSize="12sp"
                 android:layout_marginStart="5dp"
@@ -51,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtIsOnlineItemProfile"
+                android:visibility="invisible"
                 android:text="En ligne"
                 android:textSize="12sp"
                 android:layout_marginEnd="5dp"
