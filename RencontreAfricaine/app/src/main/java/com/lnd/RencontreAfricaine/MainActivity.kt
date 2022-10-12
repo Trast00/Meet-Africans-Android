@@ -1,21 +1,18 @@
 package com.lnd.RencontreAfricaine
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lnd.RencontreAfricaine.databinding.ActivityMainBinding
 
-import com.lnd.RencontreAfricaine.ui.main.ViewPagerAdapter
+import com.lnd.RencontreAfricaine.utils.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val newUserData: HashMap<String, Any>? = null //id, phone, mdp, key
-        val currentUser: Users? = null
+        var newUserData: HashMap<String, Any>? = null //id, phone, mdp, key
+        var currentUser: Users? = null
     }
 
     //Comment 2
