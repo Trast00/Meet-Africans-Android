@@ -25,6 +25,9 @@ allprojects {
         google()      //and here
         jcenter()
         mavenCentral()  // Maven Central repository
+
+        //groupie
+        maven { url "https://jitpack.io" }
     }
 }
 

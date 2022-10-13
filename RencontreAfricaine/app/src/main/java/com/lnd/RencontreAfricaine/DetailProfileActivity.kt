@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.lnd.RencontreAfricaine.ui.main.DiscussionFragment
 
 class DetailProfileActivity : AppCompatActivity() {
     companion object{
@@ -136,7 +137,11 @@ class DetailProfileActivity : AppCompatActivity() {
         }
         btnContact.setOnClickListener {
             if (isUnlocked){
-                ChatActivity.partner = selectedUser
+                for (item in DiscussionFragment.listChats){
+                    if (item.toUserId== selectedUser!!.userData.id){
+                        ChatActivity.chatPartner = item
+                    }
+                }
                 startActivity(Intent(this, ChatActivity::class.java))
             }else{
                 if (MainActivity.newUserData==null){
@@ -192,7 +197,7 @@ class DetailProfileActivity : AppCompatActivity() {
                 .child(MainActivity.currentUser!!.userData.id)
                 .child("userChats")
 
-            val idChat = fb.push().key
+            val idChat = FirebaseDatabase.getInstance().reference.child("Discussions").push().key
 
             var newMap: MutableMap<String,Any?> = HashMap()
             newMap["idChat"] = idChat

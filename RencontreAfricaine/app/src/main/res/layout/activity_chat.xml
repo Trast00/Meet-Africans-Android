@@ -4,6 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/disabled_background"
     tools:context=".ChatActivity">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cardMessageChat"
+        app:layout_constraintTop_toBottomOf="@id/cardBanChat"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/cardBanChat"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imgProfileChat"
+                android:src="@color/purple_200"
+                android:foreground="@drawable/profileforground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtNameChat"
+                android:text="User Name"
+                android:textStyle="bold"
+                android:textSize="19sp"
+                android:textColor="@color/text_black"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintStart_toEndOf="@id/imgProfileChat"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:src="@color/purple_200"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/cardMessageChat"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/edMessageChat"
+                android:hint="Message ..."
+                android:background="@null"
+                android:paddingStart="15dp"
+                android:paddingEnd="8dp"
+                android:layout_marginEnd="80dp"
+                android:inputType="textMultiLine"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:id="@+id/btnSendChat"
+                android:text="Envoyer"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:background="@color/purple_500"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/recyclerChat"
+        app:layout_constraintTop_toBottomOf="@id/cardBanChat"
+        app:layout_constraintBottom_toTopOf="@id/cardMessageChat"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

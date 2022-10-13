@@ -40,6 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtInfoDiscussion"
                 android:text="Vous devez vous inscrire pour debuter des conversation"
                 android:textColor="@color/text_purple"
                 android:layout_marginBottom="8dp"
