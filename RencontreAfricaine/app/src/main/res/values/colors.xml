@@ -11,5 +11,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="disabled_background">#E9E9E9</color>
+    <color name="background">#FCFCFC</color>
 
 </resources>

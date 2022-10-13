@@ -8,19 +8,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.lnd.RencontreAfricaine.utils.SpinnerAdapter
 
 class EditProfileActivity : AppCompatActivity() {
     companion object{
@@ -41,6 +49,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    private val countryList = mutableListOf("Pays", "Mali", "Algerie",
+        "Senegal", "Burkina Faso", "Niger", "Nigeria", "Togo", "Benin", "Cape Vert", "Gambie",
+        "Ghana", "Guinee Bissau")
 
     private lateinit var progress : ProgressBar
     private lateinit var btnConfirm : ImageView
@@ -87,10 +98,18 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var lastProgress: ProgressBar
 
     private lateinit var constCountry: ConstraintLayout
-    private lateinit var edCountry: TextInputEditText
+    private lateinit var spinCountry: Spinner
     private lateinit var cardFrench: CardView
     private lateinit var cardEnglish: CardView
     private lateinit var txtSelectedLanguage: TextView
+
+    //Wanted
+    private lateinit var constWanted: ConstraintLayout
+    private lateinit var edBio: TextInputEditText
+    private lateinit var edWantedAge1: TextInputEditText
+    private lateinit var edWantedAge2: TextInputEditText
+    private lateinit var imgWantedMen: ImageView
+    private lateinit var imgWantedWomen: ImageView
     private fun unit() {
         btnConfirm = findViewById(R.id.btnConfirm)
         btnBack = findViewById(R.id.btnback)
@@ -136,13 +155,26 @@ class EditProfileActivity : AppCompatActivity() {
         txtProgress = findViewById(R.id.txtProgress)
 
         constCountry = findViewById(R.id.constCountry)
-        edCountry = findViewById(R.id.edCountry)
+        spinCountry = findViewById(R.id.spinnerCountry)
         cardFrench = findViewById(R.id.cardFrench)
         cardEnglish = findViewById(R.id.cardEnglish)
         txtSelectedLanguage = findViewById(R.id.txtSelectedLanguage)
 
+        constWanted = findViewById(R.id.constWant)
+        edBio = findViewById(R.id.edBio)
+        edWantedAge1 = findViewById(R.id.edAgeWanted1)
+        edWantedAge2 = findViewById(R.id.edAgeWanted2)
+        imgWantedMen = findViewById(R.id.imgMenWanted)
+        imgWantedWomen = findViewById(R.id.imgWomenWanted)
+
         constName.isVisible = false
         constName.isEnabled = false
+
+        constWanted.isVisible = false
+        constWanted.isEnabled = false
+
+        constCountry.isVisible = false
+        constCountry.isEnabled = false
 
         constProfile.isVisible = false
         constProfile.isEnabled = false
@@ -161,6 +193,60 @@ class EditProfileActivity : AppCompatActivity() {
 
         constCountry.isVisible = false
         constCountry.isEnabled = false
+
+
+        edWantedAge1.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0.toString().toInt()<18){
+                    findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText("18")
+                }
+            }
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+        edWantedAge2.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0.toString().toInt()<18){
+                    findViewById<TextInputLayout>(R.id.edlayoutAgeWanted2).editText!!.setText("18")
+                }
+            }
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+        imgWantedMen.setOnClickListener {
+            if (!selectedWantedSex.contains("Femme")){
+                imgWantedMen.setImageResource(R.drawable.men_yes)
+            }else{
+                imgWantedMen.setImageResource(R.drawable.men_no)
+            }
+
+            selectedWantedSex = if (selectedWantedSex.contains("Homme") && !selectedWantedSex.contains("Femme")){
+                "Homme"
+            } else if (selectedWantedSex.contains("Femme") && !selectedWantedSex.contains("Homme")){
+                "Homme"
+            } else{
+                "Homme / Femme"
+            }
+
+            Toast.makeText(this, "Je veux rencontrer un(e) $selectedWantedSex", Toast.LENGTH_LONG).show()
+        }
+        imgSexWomen.setOnClickListener {
+            if (!selectedWantedSex.contains("Femme")){
+                imgSexWomen.setImageResource(R.drawable.women_yes)
+            }else{
+                imgSexWomen.setImageResource(R.drawable.women_no)
+            }
+
+            selectedWantedSex = if (selectedWantedSex.contains("Homme") && !selectedWantedSex.contains("Femme")){
+                "Homme"
+            } else if (selectedWantedSex.contains("Femme") && !selectedWantedSex.contains("Homme")){
+                "Homme"
+            } else{
+                "Homme / Femme"
+            }
+
+            Toast.makeText(this, "Je veux rencontrer un(e) $selectedWantedSex", Toast.LENGTH_LONG).show()
+        }
 
         //Listener Sex
         imgSexMen.setOnClickListener {
@@ -215,6 +301,22 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         //Select Country
+        spinCountry.adapter = SpinnerAdapter(this, countryList)
+
+        spinCountry.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val filter = p1?.findViewById<TextView>(R.id.txtItemSpinner)?.text.toString()
+                if(filter!="null" && filter!="Pays"){
+                    selectedLocalisation = if (filter!="Monde / Partout"){
+                        filter
+                    } else{
+                        ""
+                    }
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
         cardFrench.setOnClickListener{
             if (selectedLanguage.contains("Français,")){
                 selectedLanguage.removePrefix("Français,")
@@ -336,20 +438,23 @@ class EditProfileActivity : AppCompatActivity() {
 
     private val mUserRef = FirebaseDatabase.getInstance().reference.child("Users")
     private fun confirmEdit() {
-        progress.progress = 0
+        lastProgress.progress = 0
         uploadImage()
 
     }
 
     private fun finishEdit(){
+        lastProgress.progress = 0
         val newMapData: MutableMap<String, Any?> = HashMap()
         val newMapStatue: MutableMap<String, Any?>  = HashMap()
         //in user Info
         val newMapContact: MutableMap<String, Any?>  = HashMap()
+        val newMapSearching: MutableMap<String, Any?>  = HashMap()
+        val newMapInfo: MutableMap<String, Any?>  = HashMap()
         //Register //prefer map then userData
         newMapData["id"] = MainActivity.newUserData!!["id"]
-        newMapData["phone"] = MainActivity.newUserData["phone"]
-        newMapStatue["nbrKey"] = MainActivity.newUserData["key"]
+        newMapData["phone"] = MainActivity.newUserData!!["phone"]
+        newMapStatue["nbrKey"] = MainActivity.newUserData!!["key"]
 
 
         newMapData["nom"] = edName.text.toString()
@@ -358,7 +463,7 @@ class EditProfileActivity : AppCompatActivity() {
         newMapData["sexe"] = selectedSex
         newMapData["mdp"] = ""
         newMapData["imgProfileUrl"] = profileUrl
-        newMapData["localisation"] = edCountry.text.toString()
+        newMapData["localisation"] = selectedLocalisation
         newMapData["language"] = selectedLanguage
 
         newMapStatue["connected"] = true
@@ -381,10 +486,52 @@ class EditProfileActivity : AppCompatActivity() {
             newMapContact["gmail"] = edGmail.text.toString()
         }
 
-        mUserRef.child("userData").updateChildren(newMapData)
-        mUserRef.child("userInfo").child("contact").updateChildren(newMapContact)
-        mUserRef.child("userInfo").child("searching")
+        //user Wanted
+        newMapSearching["sexe"] = selectedWantedSex
+        newMapSearching["relation"] = selectedRelation
+        newMapSearching["age"] = "${edWantedAge1.text}-${edWantedAge2.text}"
 
+        //user Info
+        newMapInfo["bio"] = edBio.text.toString()
+        newMapInfo["hobbies"] = ""
+
+        mUserRef.child("userData").updateChildren(newMapData)
+            .addOnSuccessListener {
+                lastProgress.progress = 20
+                mUserRef.child("userInfo").child("contact").updateChildren(newMapContact)
+                    .addOnSuccessListener {
+                        lastProgress.progress = 40
+                        mUserRef.child("userInfo").child("searching").updateChildren(newMapSearching)
+                            .addOnSuccessListener {
+                                lastProgress.progress = 60
+                                mUserRef.child("userInfo").child("info").updateChildren(newMapInfo)
+                                    .addOnSuccessListener {
+                                        lastProgress.progress = 80
+                                        MainActivity.currentUser = Users(
+                                            UserData(newMapData["id"].toString(), newMapData["phone"].toString(),
+                                                newMapData["nom"].toString(), newMapData["prenom"].toString(),
+                                                newMapData["age"].toString().toInt(), newMapData["sexe"].toString(),
+                                                newMapData["mdp"].toString(), newMapData["imgProfileUrl"].toString(),
+                                                newMapData["relation"].toString(), newMapData["localisation"].toString(),
+                                                newMapData["language"].toString()),
+                                            UserStatue(newMapStatue["nbrKey"].toString().toInt(),
+                                                newMapStatue["connected"].toString().toBoolean(),
+                                                newMapStatue["premiumDays"].toString().toInt()),
+                                            UserInfo(
+                                                Contacts(newMapContact["whatsapp"].toString(),
+                                                newMapContact["messenger"].toString(), newMapContact["gmail"].toString()),
+                                                Searching(newMapSearching["sexe"].toString(), newMapSearching["relation"].toString(),
+                                                    newMapSearching["age"].toString()),
+                                                Info(newMapInfo["bio"].toString(), null)),
+                                            MainActivity.currentUser?.userChats
+                                        )
+                                        MainActivity.newUserData = null
+                                        isNewUser = false
+                                        lastProgress.progress = 100
+                                    }
+                            }
+                    }
+            }
         //add a tout les user les donnée: localisation, language
     }
 
@@ -410,22 +557,25 @@ class EditProfileActivity : AppCompatActivity() {
             1->{constName.isVisible = true
                 constName.isEnabled = true
             }
-            2->{constCountry.isVisible = true
+            2->{constWanted.isVisible = true
+                constWanted.isEnabled =true
+            }
+            3->{constCountry.isVisible = true
                 constCountry.isEnabled = true
             }
-            3->{constProfile.isVisible = true
+            4->{constProfile.isVisible = true
                 constProfile.isEnabled = true
             }
-            4->{constContact.isVisible = true
+            5->{constContact.isVisible = true
                 constContact.isEnabled = true
             }
-            5->{constRelation.isVisible = true
+            6->{constRelation.isVisible = true
                 constRelation.isEnabled = true
             }
-            6->{constConfirm.isVisible = true
+            7->{constConfirm.isVisible = true
                 constConfirm.isEnabled = true
             }
-            7->{constFinish.isVisible = true
+            8->{constFinish.isVisible = true
                 constFinish.isEnabled = true
             }
         }
@@ -497,22 +647,25 @@ class EditProfileActivity : AppCompatActivity() {
                     1->{constName.isVisible = false
                         constName.isEnabled = false
                     }
-                    2->{constCountry.isVisible = false
+                    2->{constWanted.isVisible = false
+                        constWanted.isEnabled = false
+                    }
+                    3->{constCountry.isVisible = false
                         constCountry.isEnabled = false
                     }
-                    3->{constProfile.isVisible = false
+                    4->{constProfile.isVisible = false
                         constProfile.isEnabled = false
                     }
-                    4->{constContact.isVisible = false
+                    5->{constContact.isVisible = false
                         constContact.isEnabled = false
                     }
-                    5->{constRelation.isVisible = false
+                    6->{constRelation.isVisible = false
                         constRelation.isEnabled = false
                     }
-                    6->{constConfirm.isVisible = false
+                    7->{constConfirm.isVisible = false
                         constConfirm.isEnabled = false
                     }
-                    7->{constFinish.isVisible = false
+                    8->{constFinish.isVisible = false
                         constFinish.isEnabled = false
                     }
                 }
@@ -526,8 +679,10 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private var selectedSex = "none"
+    private var selectedWantedSex = "none"
     private var profileUrl = "none"
     private var selectedRelation = "none"
+    private var selectedLocalisation = ""
     private fun checkValidity(step: Int):Boolean{
         var error = ""
         when(step){
@@ -540,19 +695,32 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
             2->{
+                if (edWantedAge1.text.toString().isEmpty() || edWantedAge2.text.toString().isEmpty()){
+                    error += "\n-vous devez choisir l'age votre de partenaire (exemple: entre 18 et 30 ans)"
+                }
+                if (selectedWantedSex=="none"){
+                    error += "\n-vous devez choisir le sexe de partenaire que vous rechercher (Homme ou/et Femme)"
+                }
+                if (edWantedAge1.text.toString().toInt()> edWantedAge2.text.toString().toInt()){
+                    val c = edWantedAge1.text.toString()
+                    findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText(edWantedAge2.text.toString())
+                    findViewById<TextInputLayout>(R.id.edlayoutAgeWanted2).editText!!.setText(c)
+                }
+            }
+            3->{
                 if (selectedLanguage.isEmpty()){
                     error+= "\nVous devez choisir les language que vous parler"
                 }
-                if (edCountry.text.toString().isEmpty()){
+                if (selectedLocalisation.isNotEmpty()){
                     error += "\nVous devez ecrire le nom de votre pays"
                 }
             }
-            3 -> {
+            4-> {
                 if (profileUrl=="none"){
                     error+= "\n-vous devez choisir un image de profile "
                 }
             }
-            4 -> {
+            5-> {
                 if ((edGmail.text.toString().isNotEmpty() ||
                             edMessenger.text.toString().isNotEmpty() ||
                             edWhatsapp.text.toString().isNotEmpty())
@@ -562,7 +730,7 @@ class EditProfileActivity : AppCompatActivity() {
                             "\n\nOu supprimer toute les information dans vos contacte"
                 }
             }
-            5 -> {
+            6-> {
                 if (selectedRelation=="none"){
                     error+= "\n-vous devez choisir le type de relation que vous rechercher de profile "
                 }
@@ -572,6 +740,81 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
+        progress.isVisible = true
+        val user = MainActivity.currentUser!!
+
+        //step 1: Name
+        constName.isEnabled = true
+        edName.setText(user.userData.nom)
+        edAge.setText(user.userData.age.toString())
+        if (user.userData.sexe=="Homme"){
+            imgSexMen.performClick()
+        }else{
+            imgSexWomen.performClick()
+        }
+        constName.isEnabled = false
+
+        //step 2 : Wanted
+        constWanted.isEnabled = true
+        edBio.setText(user.userInfo.info!!.bio)
+        edWantedAge1.setText(user.userInfo.searching.age.subSequence(0,1))
+        edWantedAge1.setText(user.userInfo.searching.age.subSequence(2,3))
+
+        if (user.userInfo.searching.sexe.contains("Homme")){
+            imgWantedMen.performClick()
+        }
+        if (user.userInfo.searching.sexe.contains("Femme")){
+            imgWantedWomen.performClick()
+        }
+        constWanted.isEnabled = false
+
+        //step 3: Country and language
+        constCountry.isEnabled = true
+
+        for ((i, it) in countryList.withIndex()){
+            if (user.userData.localisation==it){
+                spinCountry.setSelection(i)
+            }
+        }
+        if (user.userData.language.contains("Francais")){
+            cardFrench.performClick()
+        }
+        if (user.userData.language.contains("English")){
+            cardEnglish.performClick()
+        }
+        constCountry.isEnabled = false
+
+        //step 4: Profile
+        constProfile.isEnabled = true
+        Glide.with(this).clear(imgSelectedProfile)
+        Glide.with(this).load(user.userData.imgProfileUrl)
+            .into(imgSelectedProfile)
+
+        constProfile.isEnabled = false
+
+        //step 5: Contact
+        constContact.isEnabled = true
+        edGmail.setText(user.userInfo.contacts.gmail)
+        edMessenger.setText(user.userInfo.contacts.messenger)
+        edWhatsapp.setText(user.userInfo.contacts.whatsapp)
+        checkBoxContact.isChecked =true
+        constContact.isEnabled = false
+
+        //step 6: relation
+        constRelation.isEnabled = true
+        when(user.userData.relation){
+            "Marriage"->cardMarriage.performClick()
+            "Relation Serieuse"->cardRelationSerious.performClick()
+            "Amour"->cardLove.performClick()
+            "Amitie"->cardFriend.performClick()
+            "Relation Sexuel"->cardSex.performClick()
+            "Inconnue"->cardUnknown.performClick()
+        }
+        constRelation.isEnabled = false
+
+        //finished now go back to step 1
+        progress.isVisible = false
+        goStep(1)
 
     }
 }

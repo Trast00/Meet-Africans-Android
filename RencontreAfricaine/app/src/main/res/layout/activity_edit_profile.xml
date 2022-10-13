@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/constName"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_marginTop="300dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -124,7 +124,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/constCountry"
+        android:id="@+id/constWant"
         android:visibility="invisible"
         android:layout_marginTop="300dp"
         app:layout_constraintTop_toTopOf="parent">
@@ -133,12 +133,10 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
-            android:hint="Pays"
-            app:startIconDrawable="@drawable/iconsuser"
-            app:prefixText="+223"
-            android:id="@+id/edlayoutCountry"
+            android:hint="Bio (Message pour ceux qui verront votre profile)"
+            android:id="@+id/edlayoutBio"
             android:layout_width="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             app:endIconMode="clear_text"
@@ -148,20 +146,141 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edCountry"
-                android:inputType="text"
+                android:layout_height="90dp"
+                android:id="@+id/edBio"
+                android:text=""
+                android:inputType="textMultiLine"
+                android:gravity="top|start"
+
+                android:freezesText="true"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@null"
+                android:ellipsize="end"
+                android:selectAllOnFocus="true"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/txtno9"
+            android:text="Je veux rencontrer un(e) partenaire d'age entre:"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutBio"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Entre 18 ans "
+            app:suffixText="ans"
+            app:prefixText="Entre"
+            android:id="@+id/edlayoutAgeWanted1"
+            android:layout_width="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toStartOf="@id/edlayoutAgeWanted2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtno9">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edAgeWanted1"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Et 31 ans "
+            app:suffixText="ans"
+            app:prefixText="ET  "
+            android:id="@+id/edlayoutAgeWanted2"
+            android:layout_width="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintStart_toEndOf="@id/edlayoutAgeWanted1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edlayoutAgeWanted1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edAgeWanted2"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtno8"
+            android:text="Je veux rencontrer un(e):"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintTop_toBottomOf="@id/edlayoutAgeWanted1"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:id="@+id/imgMenWanted"
+            android:src="@drawable/men_no"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toStartOf="@id/imgWomenWanted"
+            app:layout_constraintTop_toBottomOf="@id/txtno8"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:id="@+id/imgWomenWanted"
+            android:src="@drawable/women_no"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@id/imgMenWanted"
+            app:layout_constraintTop_toBottomOf="@id/txtno8"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/constCountry"
+        android:layout_marginTop="300dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Spinner
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:id="@+id/spinnerCountry"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/txtno6"
             android:text="Quel langue parler vous ?"
             android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@id/edlayoutCountry"
-            app:layout_constraintStart_toStartOf="@id/edlayoutCountry"/>
+            app:layout_constraintTop_toBottomOf="@id/spinnerCountry"
+            app:layout_constraintStart_toStartOf="@id/spinnerCountry"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="180dp"
