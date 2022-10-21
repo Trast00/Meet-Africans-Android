@@ -48,12 +48,13 @@ class SpinnerAdapter(private val context:Context, private val listFilter:Mutable
             "Togo"->img.setImageResource(R.drawable.iconstogo)
             "Benin"->img.setImageResource(R.drawable.iconsbenin)
             "Cape Vert"->img.setImageResource(R.drawable.iconscapevert)
-            "Gambie"->img.setImageResource(R.drawable.iconsgame)
+            "Gambie"->img.setImageResource(R.drawable.iconsgambie)
             "Ghana"->img.setImageResource(R.drawable.iconsghana)
             "Guinee Bissau"->img.setImageResource(R.drawable.iconsguinebissau)
 
 
         }
+
 
         return rootView
     }

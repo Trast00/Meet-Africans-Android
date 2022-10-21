@@ -17,10 +17,16 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.lnd.RencontreAfricaine.R
+import com.lnd.RencontreAfricaine.ui.main.DiscoverFragment
+import com.lnd.RencontreAfricaine.ui.main.DiscussionFragment
 
 
 class SplashActivity : AppCompatActivity() {
-    val CURRENT_VERSION = 3
+    companion object{
+        val CURRENT_VERSION = 3
+        var infoServer: InfoServer? =null
+    }
+
     val progressStep = 20
 
     private val TAG = "SplachActivity"
@@ -37,49 +43,6 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-    private fun correctData() {
-        //relation, localisation, language
-        val listUser : MutableList<UserData> = mutableListOf()
-        FirebaseDatabase.getInstance().reference.child("Users")
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-                        for (h0 in snapshot.children){
-                            val newMap : MutableMap<String, Any> = HashMap()
-                            if (h0.child("userChats").exists()){
-                                for (h1 in h0.child("userChats").children){
-                                    val id = h1.key.toString()
-                                    newMap["id"] = h1.key.toString()
-                                    newMap["phone"] = ""
-                                    newMap["nom"] = h1.child("name").value.toString()
-                                    newMap["prenom"] = ""
-                                    newMap["age"] = 18
-                                    newMap["sexe"] = "Unknown"
-                                    newMap["mdp"] = ""
-                                    newMap["imgProfileUrl"] = h1.child("imgProfile").value.toString()
-
-                                    newMap["relation"] = ""
-                                    newMap["localisation"] = ""
-                                    newMap["language"] = ""
-
-                                    FirebaseDatabase.getInstance().reference.child("Users")
-                                        .child(id).child("userData").setValue(newMap)
-                                }
-                            }
-                            /*
-                            newMap["relation"] = ""
-                            newMap["localisation"] = ""
-                            newMap["language"] = ""
-                            FirebaseDatabase.getInstance().reference.child("Users")
-                                .child(id).child("userData").setValue(newMap)*/
-                        }
-                        Toast.makeText(this@SplashActivity, "DONE", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
-    }
 
     var userID = ""
     private fun unit(step:Int) {
@@ -108,20 +71,136 @@ class SplashActivity : AppCompatActivity() {
         else if (step==1){
             Handler(Looper.getMainLooper())
                 .postDelayed({
+                    MainActivity.newUserData = null
+                    MainActivity.currentUser = null
+                    DiscoverFragment.listUserFiltered = mutableListOf()
+                    DiscoverFragment.listUser = mutableListOf()
+                    DiscussionFragment.listChats = mutableListOf()
+
                     if (FirebaseAuth.getInstance().currentUser!=null){
                         userID = FirebaseAuth.getInstance().currentUser!!.uid
-                        progress.progress = 100
-                        startActivity(Intent(this, MainActivity::class.java))
+                        progress.progress = 60
+                        getUserData()
                     }
                     else{
                         progress.progress = 100
                         startActivity(Intent(this, TutoActivity::class.java))
+                        finish()
                     }
-                    finish()
             }, 500)
         }
 
 
+    }
+
+    private fun getUserData() {
+        //Try to get newUser Data (if not exist do nothing)
+        FirebaseDatabase.getInstance().reference.child("NewUsers")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        val id = snapshot.child("id").value.toString()
+                        val phone = snapshot.child("phone").value.toString()
+                        val nbrKey = snapshot.child("nbrKey").value.toString()
+
+                        val newMap = HashMap<String, Any>()
+                        newMap["id"] = id
+                        newMap["phone"] = phone
+                        newMap["nbrKey"] = nbrKey
+
+                        //get Chat Item
+                        for (item in snapshot.child("userChats").children){
+                            val idChat = item.child("idChat").value.toString()
+                            val name = item.child("name").value.toString()
+                            val imgProfile = item.child("imgProfile").value.toString()
+                            val toUserId = item.child("toUserId").value.toString()
+                            val lastMessage = item.child("lastMessage").value.toString()
+                            val nbrNewMessage = item.child("nbrNewMessage").value.toString().toInt()
+                            val connected = item.child("connected").value.toString().toBoolean()
+                            DiscussionFragment.listChats.add(UserChat(idChat, name, imgProfile, toUserId, lastMessage, nbrNewMessage, connected))
+                        }
+
+
+                        MainActivity.newUserData = newMap
+                        progress.progress = 100
+                        startActivity(Intent(this@SplashActivity, TutoActivity::class.java))
+                        finish()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+
+        //Try to get User Data (if not exist do nothing)
+        FirebaseDatabase.getInstance().reference.child("Users")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists() && snapshot.child("userData").child("id").exists()){
+                        val id = FirebaseAuth.getInstance().currentUser!!.uid
+                        val phone = snapshot.child("userData").child("phone").value.toString()
+                        val nom = snapshot.child("userData").child("nom").value.toString()
+                        val prenom = snapshot.child("userData").child("prenom").value.toString()
+                        val age = snapshot.child("userData").child("age").value.toString().toInt()
+                        val sexe = snapshot.child("userData").child("sexe").value.toString()
+                        val mdp = snapshot.child("userData").child("mdp").value.toString()
+                        val imgProfileUrl = snapshot.child("userData").child("imgProfileUrl").value.toString()
+                        val relation = snapshot.child("userData").child("relation").value.toString()
+                        val localisation = snapshot.child("userData").child("localisation").value.toString()
+                        val language = snapshot.child("userData").child("language").value.toString()
+                        val userData = UserData(id, phone, nom, prenom, age, sexe, mdp, imgProfileUrl, relation, localisation, language)
+
+                        val nbrKey = snapshot.child("userStatue").child("nbrKey").value.toString().toInt()
+                        val connected = true
+                        val premiumDays = snapshot.child("userStatue").child("premiumDays").value.toString().toInt()
+                        val userStatue = UserStatue(nbrKey, connected, premiumDays)
+
+                        var whatsapp = ""
+                        var messenger = ""
+                        var gmail = ""
+                        var wantedSex = ""
+                        var wantedRelation = ""
+                        var wantedAge = ""
+                        var bio = ""
+                        if (snapshot.child("userInfo").exists()){
+                            whatsapp = snapshot.child("userInfo").child("contact").child("whatsapp").value.toString()
+                            messenger = snapshot.child("userInfo").child("contact").child("messenger").value.toString()
+                            gmail = snapshot.child("userInfo").child("contact").child("gmail").value.toString()
+
+                            wantedSex = snapshot.child("userInfo").child("searching").child("sexe").value.toString()
+                            wantedRelation = snapshot.child("userInfo").child("searching").child("relation").value.toString()
+                            wantedAge = snapshot.child("userInfo").child("searching").child("age").value.toString()
+
+                            bio = snapshot.child("userInfo").child("info").child("bio").value.toString()
+                        }
+                        val userInfo = UserInfo(Contacts(whatsapp, messenger, gmail),
+                            Searching(wantedSex, wantedRelation, wantedAge),
+                            Info(bio, null))
+
+                        MainActivity.currentUser = Users(userData, userStatue, userInfo)
+                        progress.progress= 80
+                        //get Chat Item
+                        for (item in snapshot.child("userChats").children){
+                            val idChat = item.child("idChat").value.toString()
+                            val name = item.child("name").value.toString()
+                            val imgProfile = item.child("imgProfile").value.toString()
+                            val toUserId = item.child("toUserId").value.toString()
+                            val lastMessage = item.child("lastMessage").value.toString()
+                            val nbrNewMessage = item.child("nbrNewMessage").value.toString().toInt()
+                            val connected = item.child("connected").value.toString().toBoolean()
+
+                            DiscussionFragment.listChats.add(UserChat(idChat, name, imgProfile, toUserId, lastMessage, nbrNewMessage, connected))
+                        }
+
+                        progress.progress= 100
+                        startActivity(Intent(this@SplashActivity, TutoActivity::class.java))
+                        finish()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     private fun checkConnectionType():Boolean{
@@ -140,24 +219,26 @@ class SplashActivity : AppCompatActivity() {
         return isConnected
     }
 
-    var infoServer: InfoServer? =null
-    fun getInfoServer(){
+    private fun getInfoServer(){
         FirebaseDatabase.getInstance().reference.child("InfoServer")
             .addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
-                    Log.d("SplacheActivity", "fb addSL")
                     val adminPhone = snapshot.child("adminPhone").value.toString()
                     val adminEmail = snapshot.child("adminEmail").value.toString()
                     val isAvailable = snapshot.child("isAvailable").value.toString().toBoolean()
                     val minVersion = snapshot.child("minVersion").value.toString().toInt()
-                    val premuimPhone = snapshot.child("premuimPhone").value.toString()
-
+                    val premiumPhone = snapshot.child("premuimPhone").value.toString()
                     val title = snapshot.child("messages").child("title").value.toString()
                     val description = snapshot.child("messages").child("description").value.toString()
-                    infoServer = InfoServer(adminPhone, adminEmail, isAvailable, minVersion, premuimPhone, title, description)
+                    infoServer = InfoServer(adminPhone, adminEmail, isAvailable, minVersion, premiumPhone, title, description)
+
                     appDisabled(isAvailable)
                     updateNeeded(minVersion)
+
+                    PremiumActivity.buyPhone = premiumPhone
+                    PremiumActivity.buyGmail = snapshot.child("premuimGmail").value.toString()
+                    PremiumActivity.buyUrl = snapshot.child("buyUrl").value.toString()
                     unit(1)
                 }
             }

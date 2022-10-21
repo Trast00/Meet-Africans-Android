@@ -13,6 +13,7 @@ class TutoActivity : AppCompatActivity() {
         val btnStart = findViewById<ImageView>(R.id.btnStart)
         btnStart.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
     }

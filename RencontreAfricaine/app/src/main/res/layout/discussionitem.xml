@@ -10,6 +10,7 @@
         android:layout_height="80dp"
         android:id="@+id/imgProfileItemDiscussion"
         android:src="@color/purple_200"
+        android:scaleType="centerCrop"
         android:layout_marginStart="8dp"
         android:foreground="@drawable/profileforground"
         app:layout_constraintStart_toStartOf="parent"

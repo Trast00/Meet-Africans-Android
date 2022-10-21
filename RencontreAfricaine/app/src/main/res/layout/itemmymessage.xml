@@ -13,11 +13,11 @@
         android:minWidth="100dp"
         android:maxWidth="300dp"
         android:padding="10dp"
-        android:textColor="@color/text_black"
-        android:background="@drawable/backgroundpartnermessage"
+        android:textColor="@color/white"
+        android:background="@drawable/backgroundmymessage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

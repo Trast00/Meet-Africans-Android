@@ -4,10 +4,14 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="madeby">Made by: dickoallassane1997@gmail.com - LND Afrique</string>
     <string name="danstouteafrique">Déjà dans toute l\'Afrique de l\'Ouest</string>
-    <string name="warning1">***Les contactes sont facultative mais très utile pour augmenter vos chance de rencontré l\'âme sœur</string>
-    <string name="check1">J\'accepte d\'être contactez par Email, Messenger et WhatsApp par les autre utilisateur</string>
+    <string name="warning1">***Les contactes ne sont pas obligatoire, mais sont très utile pour augmenter vos chance de rencontré l\'âme sœur</string>
+    <string name="check1">J\'accepte d\'être contactez par Email, Messenger ou WhatsApp par les autre utilisateur</string>
     <string name="txt2">Appuyez sur retour pour modifier ou supprimer de informations</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string3">Pour voir les contacte (Gmail, Whatsapp et Messenger) et envoyer des messages a cet utilisateur, vous devez le contacter</string>
+    <string name="txt">Laisser les rencontre venir a vous ! Avec Rencontre Africaine Premium</string>
+    <string name="txt3">Augmenter votre visibilité, et laisser les gens venir a votre rencontre (Faite passer votre profile en haut de la liste)</string>
+    <string name="txt4">Obtenez 900 Clé !</string>
+    <string name="txt5">Acheter dès maintenant votre code premium</string>
 </resources>

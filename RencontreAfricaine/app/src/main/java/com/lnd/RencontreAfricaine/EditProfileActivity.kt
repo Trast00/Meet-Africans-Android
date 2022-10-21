@@ -1,38 +1,33 @@
 package com.lnd.RencontreAfricaine
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
-import android.widget.TextView.OnEditorActionListener
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.lnd.RencontreAfricaine.ui.main.DiscussionFragment
 import com.lnd.RencontreAfricaine.utils.SpinnerAdapter
 
 class EditProfileActivity : AppCompatActivity() {
     companion object{
         var isNewUser = false
+        var listener: OnFinishEdit? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -195,7 +190,7 @@ class EditProfileActivity : AppCompatActivity() {
         constCountry.isEnabled = false
 
 
-        edWantedAge1.addTextChangedListener(object: TextWatcher{
+        /*edWantedAge1.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0.toString().toInt()<18){
@@ -212,40 +207,29 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             }
             override fun afterTextChanged(p0: Editable?) {}
-        })
+        })*/
         imgWantedMen.setOnClickListener {
-            if (!selectedWantedSex.contains("Femme")){
+            if (!selectedWantedSex.contains("Homme")){
                 imgWantedMen.setImageResource(R.drawable.men_yes)
+                selectedWantedSex = if (selectedWantedSex.contains("Femme")) "Homme / Femme" else "Homme"
             }else{
                 imgWantedMen.setImageResource(R.drawable.men_no)
+                selectedWantedSex = if (selectedWantedSex.contains("Femme")) "Femme" else ""
             }
 
-            selectedWantedSex = if (selectedWantedSex.contains("Homme") && !selectedWantedSex.contains("Femme")){
-                "Homme"
-            } else if (selectedWantedSex.contains("Femme") && !selectedWantedSex.contains("Homme")){
-                "Homme"
-            } else{
-                "Homme / Femme"
-            }
+            findViewById<TextView>(R.id.txtno8).text = "Je veux rencontrer un(e) $selectedWantedSex"
 
-            Toast.makeText(this, "Je veux rencontrer un(e) $selectedWantedSex", Toast.LENGTH_LONG).show()
         }
-        imgSexWomen.setOnClickListener {
+        imgWantedWomen.setOnClickListener {
             if (!selectedWantedSex.contains("Femme")){
-                imgSexWomen.setImageResource(R.drawable.women_yes)
+                imgWantedWomen.setImageResource(R.drawable.women_yes)
+                selectedWantedSex = if (selectedWantedSex.contains("Homme")) "Homme / Femme" else "Femme"
             }else{
-                imgSexWomen.setImageResource(R.drawable.women_no)
+                imgWantedWomen.setImageResource(R.drawable.women_no)
+                selectedWantedSex = if (selectedWantedSex.contains("Homme")) "Homme" else ""
             }
 
-            selectedWantedSex = if (selectedWantedSex.contains("Homme") && !selectedWantedSex.contains("Femme")){
-                "Homme"
-            } else if (selectedWantedSex.contains("Femme") && !selectedWantedSex.contains("Homme")){
-                "Homme"
-            } else{
-                "Homme / Femme"
-            }
-
-            Toast.makeText(this, "Je veux rencontrer un(e) $selectedWantedSex", Toast.LENGTH_LONG).show()
+            findViewById<TextView>(R.id.txtno8).text = "Je veux rencontrer un(e) $selectedWantedSex"
         }
 
         //Listener Sex
@@ -270,34 +254,39 @@ class EditProfileActivity : AppCompatActivity() {
             intentProfile.type = "image/*"
             intentProfile.action = Intent.ACTION_GET_CONTENT
 
-            resultLauncher.launch(intent)
+            resultLauncher.launch(intentProfile)
         }
 
         //Listener Card Relation
-        uncheckRelation("Marriage")
         cardMarriage.setOnClickListener {
-            uncheckRelation("Marriage")
-            cardMarriage.setBackgroundResource(R.color.white)
+            checkRelation("Marriage")
+            cardMarriage.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Marriage"
         }
         cardRelationSerious.setOnClickListener {
-            uncheckRelation("Relation Seurieuse (Pouvant aboutir au mariage)")
-            cardRelationSerious.setBackgroundResource(R.color.white)
+            checkRelation("Relation Serieuse (Pouvant aboutir au marriage)")
+            cardRelationSerious.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Relation Serieuse"
         }
         cardLove.setOnClickListener {
-            uncheckRelation("Relation Amoureuse")
-            cardLove.setBackgroundResource(R.color.white)
+            checkRelation("Relation Amoureuse")
+            cardLove.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Amour"
         }
         cardFriend.setOnClickListener {
-            uncheckRelation("Relation amical")
-            cardFriend.setBackgroundResource(R.color.white)
+            checkRelation("Relation amical")
+            cardFriend.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Amitie"
         }
         cardSex.setOnClickListener {
-            uncheckRelation("Relation Sexuelle")
-            cardSex.setBackgroundResource(R.color.white)
+            checkRelation("Relation Sexuelle")
+            cardSex.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Relation Sexuel"
         }
         cardUnknown.setOnClickListener {
-            uncheckRelation("Inconnue")
-            cardUnknown.setBackgroundResource(R.color.white)
+            checkRelation("Inconnue")
+            cardUnknown.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null)
+            selectedRelation = "Inconnue"
         }
 
         //Select Country
@@ -318,48 +307,30 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         cardFrench.setOnClickListener{
-            if (selectedLanguage.contains("Français,")){
-                selectedLanguage.removePrefix("Français,")
-                selectedLanguage.removeSuffix("Français,")
-                cardFrench.setBackgroundResource(R.color.disabled_background)
+            if (selectedLanguage.contains("Français")){
+                cardFrench.backgroundTintList = this.resources.getColorStateList(R.color.white, null);
+                selectedLanguage = if (selectedLanguage.contains("Anglais")) "Anglais" else ""
             }
             else {
-                selectedLanguage += "Français,"
-                cardFrench.setBackgroundResource(R.color.white)
+
+                cardFrench.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null);
+                selectedLanguage = if (selectedLanguage.contains("Anglais")) "Français et Anglais" else "Français"
             }
 
-            if(selectedLanguage.contains("Français") && selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Français et Anglais"
-            }
-            else if(selectedLanguage.contains("Français") && !selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Français"
-            }
-            else if(!selectedLanguage.contains("Français") && selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Anglais"
-            }
+            txtSelectedLanguage.text = selectedLanguage
 
         }
 
         cardEnglish.setOnClickListener{
-            if (selectedLanguage.contains("English")){
-                selectedLanguage.removePrefix("English")
-                selectedLanguage.removeSuffix("English")
-                cardFrench.setBackgroundResource(R.color.disabled_background)
-
+            if (selectedLanguage.contains("Anglais")){
+                cardEnglish.backgroundTintList = this.resources.getColorStateList(R.color.white, null);
+                selectedLanguage = if (selectedLanguage.contains("Français")) "Français" else ""
             }else {
-                selectedLanguage += "English,"
-                cardEnglish.setBackgroundResource(R.color.white)
+                cardEnglish.backgroundTintList = this.resources.getColorStateList(R.color.gray_background, null);
+                selectedLanguage = if (selectedLanguage.contains("Français")) "Français et Anglais" else "Anglais"
             }
 
-            if(selectedLanguage.contains("Français") && selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Français et Anglais"
-            }
-            else if(selectedLanguage.contains("Français") && !selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Français"
-            }
-            else if(!selectedLanguage.contains("Français") && selectedLanguage.contains("English")){
-                txtSelectedLanguage.text = "Anglais"
-            }
+            txtSelectedLanguage.text = selectedLanguage
         }
 
 
@@ -379,35 +350,42 @@ class EditProfileActivity : AppCompatActivity() {
                     .load(mImageUri)
                     .into(imgSelectedProfile)
 
-                Glide.with(this).clear(imgProfile)
-                Glide.with(this)
-                    .load(mImageUri)
-                    .into(imgProfile)
-
             }
         }
     }
 
-    var mImageUri: Uri? = null
-    var mOldImageUri: Uri? = null
+    private var mImageUri: Uri? = null
+    var mOldImageUrl: String? = null
     private val imgProfileRef = FirebaseStorage.getInstance().getReference("profiles")
     private fun uploadImage(){
         if(mImageUri != null){
-            val name = System.currentTimeMillis().toString() + "."+getFileExtension(mImageUri!!)
+            val name = if(MainActivity.currentUser!=null){
+                MainActivity.currentUser!!.userData.id+ "."+getFileExtension(mImageUri!!)}
+            else{ MainActivity.newUserData!!["id"].toString()+ "."+getFileExtension(mImageUri!!)}
+
+            //System.currentTimeMillis().toString() + "."+getFileExtension(mImageUri!!)
             val fileReference = imgProfileRef.child(name)
 
             //if user already uploaded a image profile
-            if (mOldImageUri!=null) {
+            /*if (mOldImageUrl!=null) {
                 //Delete the old image profile before upload
                 val nameOld = System.currentTimeMillis().toString() + "."+getFileExtension(mImageUri!!)
                 val fileReferenceOld = imgProfileRef.child(nameOld)
-                fileReferenceOld.delete()
-            }
+                fileReferenceOld.delete().addOnSuccessListener {
+
+                }
+            }*/
             fileReference.putFile(mImageUri!!)
                 .addOnSuccessListener {
-                    mOldImageUri = mImageUri
-                    profileUrl = fileReference.downloadUrl.toString()
-                    finishEdit()
+                    fileReference.downloadUrl.addOnSuccessListener { uriUrl ->
+                        profileUrl = uriUrl.toString()
+                        mOldImageUrl = profileUrl
+                        finishEdit()
+                    }.addOnFailureListener{
+                        errorEdit(it.toString())
+                    }
+
+
                 }
                 .addOnFailureListener{
                     errorEdit(it.toString())
@@ -422,6 +400,15 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun errorEdit(e: String) {
+        btnBack.isEnabled = true
+        btnBack.isVisible = true
+        btnConfirm.isEnabled = true
+        btnConfirm.isVisible = true
+
+        constFinish.isVisible = false
+        constFinish.isEnabled = false
+        goStep(7)
+
         AlertDialog.Builder(this)
             .setTitle("Erreur")
             .setMessage("Il y a une erreur lors de la sauvegarde des données !" +
@@ -439,7 +426,11 @@ class EditProfileActivity : AppCompatActivity() {
     private val mUserRef = FirebaseDatabase.getInstance().reference.child("Users")
     private fun confirmEdit() {
         lastProgress.progress = 0
-        uploadImage()
+        if (mImageUri!=null){
+            uploadImage()
+        }else{
+            finishEdit()
+        }
 
     }
 
@@ -452,9 +443,14 @@ class EditProfileActivity : AppCompatActivity() {
         val newMapSearching: MutableMap<String, Any?>  = HashMap()
         val newMapInfo: MutableMap<String, Any?>  = HashMap()
         //Register //prefer map then userData
-        newMapData["id"] = MainActivity.newUserData!!["id"]
-        newMapData["phone"] = MainActivity.newUserData!!["phone"]
-        newMapStatue["nbrKey"] = MainActivity.newUserData!!["key"]
+
+        val id = if (isNewUser) MainActivity.newUserData!!["id"].toString() else MainActivity.currentUser!!.userData.id
+        newMapData["id"] = id
+        newMapData["phone"] = if (isNewUser) MainActivity.newUserData!!["phone"] else MainActivity.currentUser!!.userData.phone
+        newMapStatue["nbrKey"] = if (isNewUser) MainActivity.newUserData!!["nbrKey"] else MainActivity.currentUser!!.userStatue!!.nbrKey
+        newMapStatue["premiumDays"] = if (isNewUser) {
+            if (MainActivity.newUserData!!["isPremium"].toString().toBoolean()){ 31 } else { 0 }
+        }else MainActivity.currentUser!!.userStatue!!.premiumDays
 
 
         newMapData["nom"] = edName.text.toString()
@@ -465,14 +461,16 @@ class EditProfileActivity : AppCompatActivity() {
         newMapData["imgProfileUrl"] = profileUrl
         newMapData["localisation"] = selectedLocalisation
         newMapData["language"] = selectedLanguage
+        newMapData["relation"] = selectedRelation
 
         newMapStatue["connected"] = true
-        newMapStatue["premiumDays"] = 0
+
 
         //user Contact
         newMapContact["gmail"] = ""
         newMapContact["whatsapp"] = ""
         newMapContact["messenger"] = ""
+
         if (edWhatsapp.text.toString().isNotEmpty() &&
             edWhatsapp.text.toString()!="null"){
             newMapContact["whatsapp"] = edWhatsapp.text.toString()
@@ -491,46 +489,110 @@ class EditProfileActivity : AppCompatActivity() {
         newMapSearching["relation"] = selectedRelation
         newMapSearching["age"] = "${edWantedAge1.text}-${edWantedAge2.text}"
 
+
         //user Info
-        newMapInfo["bio"] = edBio.text.toString()
+        newMapInfo["bio"] = edBio.text.toString().trim()
         newMapInfo["hobbies"] = ""
 
-        mUserRef.child("userData").updateChildren(newMapData)
+        mUserRef.child(id).child("userData").updateChildren(newMapData)
             .addOnSuccessListener {
                 lastProgress.progress = 20
-                mUserRef.child("userInfo").child("contact").updateChildren(newMapContact)
+                mUserRef.child(id).child("userStatue").updateChildren(newMapStatue)
                     .addOnSuccessListener {
-                        lastProgress.progress = 40
-                        mUserRef.child("userInfo").child("searching").updateChildren(newMapSearching)
+                        lastProgress.progress = 30
+                        mUserRef.child(id).child("userInfo").child("contact").updateChildren(newMapContact)
                             .addOnSuccessListener {
-                                lastProgress.progress = 60
-                                mUserRef.child("userInfo").child("info").updateChildren(newMapInfo)
+                                lastProgress.progress = 40
+                                mUserRef.child(id).child("userInfo").child("searching").updateChildren(newMapSearching)
                                     .addOnSuccessListener {
-                                        lastProgress.progress = 80
-                                        MainActivity.currentUser = Users(
-                                            UserData(newMapData["id"].toString(), newMapData["phone"].toString(),
-                                                newMapData["nom"].toString(), newMapData["prenom"].toString(),
-                                                newMapData["age"].toString().toInt(), newMapData["sexe"].toString(),
-                                                newMapData["mdp"].toString(), newMapData["imgProfileUrl"].toString(),
-                                                newMapData["relation"].toString(), newMapData["localisation"].toString(),
-                                                newMapData["language"].toString()),
-                                            UserStatue(newMapStatue["nbrKey"].toString().toInt(),
-                                                newMapStatue["connected"].toString().toBoolean(),
-                                                newMapStatue["premiumDays"].toString().toInt()),
-                                            UserInfo(
-                                                Contacts(newMapContact["whatsapp"].toString(),
-                                                newMapContact["messenger"].toString(), newMapContact["gmail"].toString()),
-                                                Searching(newMapSearching["sexe"].toString(), newMapSearching["relation"].toString(),
-                                                    newMapSearching["age"].toString()),
-                                                Info(newMapInfo["bio"].toString(), null)),
-                                            MainActivity.currentUser?.userChats
-                                        )
-                                        MainActivity.newUserData = null
-                                        isNewUser = false
-                                        lastProgress.progress = 100
+                                        lastProgress.progress = 60
+                                        mUserRef.child(id).child("userInfo").child("info").updateChildren(newMapInfo)
+                                            .addOnSuccessListener {
+                                                lastProgress.progress = 80
+                                                MainActivity.currentUser = Users(
+                                                    UserData(newMapData["id"].toString(), newMapData["phone"].toString(),
+                                                        newMapData["nom"].toString(), newMapData["prenom"].toString(),
+                                                        newMapData["age"].toString().toInt(), newMapData["sexe"].toString(),
+                                                        newMapData["mdp"].toString(), newMapData["imgProfileUrl"].toString(),
+                                                        newMapData["relation"].toString(), newMapData["localisation"].toString(),
+                                                        newMapData["language"].toString()),
+                                                    UserStatue(newMapStatue["nbrKey"].toString().toInt(),
+                                                        newMapStatue["connected"].toString().toBoolean(),
+                                                        newMapStatue["premiumDays"].toString().toInt()),
+                                                    UserInfo(
+                                                        Contacts(newMapContact["whatsapp"].toString(),
+                                                            newMapContact["messenger"].toString(), newMapContact["gmail"].toString()),
+                                                        Searching(newMapSearching["sexe"].toString(), newMapSearching["relation"].toString(),
+                                                            newMapSearching["age"].toString()),
+                                                        Info(newMapInfo["bio"].toString(), null))
+                                                )
+                                                lastProgress.progress = 90
+
+                                                if (isNewUser){
+                                                    var i =0
+                                                    for (userChat in DiscussionFragment.listChats){
+                                                        val newMap : MutableMap<String, Any?> = HashMap()
+                                                        newMap["toUserId"] = userChat.toUserId
+                                                        newMap["imgProfile"] = userChat.imgProfile
+                                                        newMap["lastMessage"] = userChat.lastMessage
+                                                        newMap["nbrNewMessage"] = userChat.nbrNewMessage
+                                                        newMap["connected"] = userChat.connected
+                                                        newMap["toUserId"] = userChat.imgProfile
+                                                        newMap["name"] = userChat.name
+                                                        FirebaseDatabase.getInstance().reference.child("Users")
+                                                            .child(id)
+                                                            .child("userChats").child(userChat.toUserId)
+                                                            .updateChildren(newMap)
+                                                            .addOnSuccessListener {
+                                                                progress.progress = 95
+                                                                if (i==DiscussionFragment.listChats.size-1){
+                                                                    //last item
+                                                                    FirebaseDatabase.getInstance().reference.child("NewUsers")
+                                                                        .child(FirebaseAuth.getInstance().currentUser!!.uid).removeValue()
+                                                                        .addOnSuccessListener {
+                                                                            MainActivity.newUserData = null
+                                                                            isNewUser = false
+                                                                            lastProgress.progress = 100
+                                                                            listener?.onFinishEdit()
+                                                                            startActivity(Intent(this, SplashActivity::class.java))
+                                                                            finish()
+                                                                        }
+                                                                }
+                                                                i++
+                                                            }
+                                                    }
+
+                                                    if (DiscussionFragment.listChats.isEmpty()){
+                                                        FirebaseDatabase.getInstance().reference.child("NewUsers")
+                                                            .child(FirebaseAuth.getInstance().currentUser!!.uid).removeValue()
+                                                            .addOnSuccessListener {
+                                                                MainActivity.newUserData = null
+                                                                isNewUser = false
+                                                                lastProgress.progress = 100
+                                                                listener?.onFinishEdit()
+                                                                startActivity(Intent(this, SplashActivity::class.java))
+                                                                finish()
+                                                            }
+                                                    }
+
+                                                }else{
+                                                    FirebaseDatabase.getInstance().reference.child("NewUsers")
+                                                        .child(FirebaseAuth.getInstance().currentUser!!.uid).removeValue()
+                                                        .addOnSuccessListener {
+                                                            MainActivity.newUserData = null
+                                                            isNewUser = false
+                                                            lastProgress.progress = 100
+                                                            listener?.onFinishEdit()
+                                                            startActivity(Intent(this, SplashActivity::class.java))
+                                                            finish()
+                                                        }
+                                                }
+                                            }
+                                            .addOnFailureListener { errorEdit(it.toString()) }
                                     }
+                                    .addOnFailureListener { errorEdit(it.toString()) }
                             }
-                    }
+                    }.addOnFailureListener { errorEdit(it.toString()) }
             }
         //add a tout les user les donnée: localisation, language
     }
@@ -539,19 +601,18 @@ class EditProfileActivity : AppCompatActivity() {
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri))
     }
 
-    private fun uncheckRelation(type:String) {
-        cardMarriage.setBackgroundResource(R.color.disabled_background)
-        cardRelationSerious.setBackgroundResource(R.color.disabled_background)
-        cardLove.setBackgroundResource(R.color.disabled_background)
-        cardFriend.setBackgroundResource(R.color.disabled_background)
-        cardSex.setBackgroundResource(R.color.disabled_background)
-        cardUnknown.setBackgroundResource(R.color.disabled_background)
+    private fun checkRelation(type:String) {
+        cardMarriage.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
+        cardRelationSerious.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
+        cardLove.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
+        cardFriend.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
+        cardSex.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
+        cardUnknown.backgroundTintList = this.resources.getColorStateList(R.color.white, null)
 
         findViewById<TextView>(R.id.txtSeeking).text = type
-
     }
 
-    private val timeBetweenStep:Long = 300
+    private val timeBetweenStep:Long = 500
     private fun goStep(step: Int) {
         when(step){
             1->{constName.isVisible = true
@@ -584,23 +645,63 @@ class EditProfileActivity : AppCompatActivity() {
             btnBack.isVisible = false
             btnBack.isEnabled = false
         }
-        else if(step==2){
+        else{
             btnBack.isVisible = true
             btnBack.isEnabled = true
             btnBack.setOnClickListener {
-                goStep(step-1)
+                progress.isVisible = true
+                when(step){
+                    2->{constWanted.isVisible = false
+                        constWanted.isEnabled = false
+                    }
+                    3->{constCountry.isVisible = false
+                        constCountry.isEnabled = false
+                    }
+                    4->{constProfile.isVisible = false
+                        constProfile.isEnabled = false
+                    }
+                    5->{constContact.isVisible = false
+                        constContact.isEnabled = false
+                    }
+                    6->{constRelation.isVisible = false
+                        constRelation.isEnabled = false
+                    }
+                    7->{constConfirm.isVisible = false
+                        constConfirm.isEnabled = false
+                    }
+                    8->{constFinish.isVisible = false
+                        constFinish.isEnabled = false
+                    }
+                }
+                Handler(Looper.getMainLooper()).postDelayed({
+                    progress.isVisible = false
+                    goStep(step-1)
+                }, timeBetweenStep)
             }
         }
 
-        if(step==6){
+        if(step==7){
             //Loaded data to confirm
             Glide.with(this).clear(imgProfile)
-            Glide.with(this).load(mImageUri).into(imgProfile)
+            if(mImageUri!=null){
+                Glide.with(this).load(mImageUri).into(imgProfile)
+            }else {
+                Glide.with(this).load(profileUrl).into(imgProfile)
+            }
+
             txtCountry.text = ""
             txtIsOnline.text = "En ligne"
             txtName.text = edName.text.toString()
             txtName2.text = edName.text.toString()
             txtSexAge.text = "$selectedSex - ${edAge.text} ans"
+            when(selectedRelation){
+                "Marriage"->imgWanted.setImageResource(R.drawable.iconsring)
+                "Relation Serieuse"->imgWanted.setImageResource(R.drawable.iconsflower)
+                "Amour"->imgWanted.setImageResource(R.drawable.iconsheart)
+                "Amitie"->imgWanted.setImageResource(R.drawable.iconsfriend)
+                "Relation Sexuel"->imgWanted.setImageResource(R.drawable.iconssex)
+                else->imgWanted.setImageResource(R.drawable.iconsunknown)
+            }
 
             if (edGmail.text!!.isNotEmpty()){
                 txtGmail.text = edGmail.text
@@ -627,14 +728,13 @@ class EditProfileActivity : AppCompatActivity() {
                 findViewById<ImageView>(R.id.imgnoMessenger).isVisible = false
             }
 
-            when(selectedSex){
-                "Marriage"->imgWanted.setImageResource(R.drawable.iconsring)
-                "Relation Serieuse"->imgWanted.setImageResource(R.drawable.iconsflower)
-                "Amour"->imgWanted.setImageResource(R.drawable.iconsheart)
-                "Amitie"->imgWanted.setImageResource(R.drawable.iconsfriend)
-                "Relation Sexuel"->imgWanted.setImageResource(R.drawable.iconssex)
-                "Inconnue"->imgWanted.setImageResource(R.drawable.iconsunknown)
-            }
+        }
+        else if(step==8){
+            btnBack.isEnabled = false
+            btnBack.isVisible = false
+            btnConfirm.isEnabled = false
+            btnConfirm.isVisible = false
+            confirmEdit()
         }
 
         btnConfirm.setOnClickListener {
@@ -642,34 +742,30 @@ class EditProfileActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             progress.isVisible = true
-            Handler(Looper.getMainLooper()).postDelayed({
-                when(step){
-                    1->{constName.isVisible = false
-                        constName.isEnabled = false
-                    }
-                    2->{constWanted.isVisible = false
-                        constWanted.isEnabled = false
-                    }
-                    3->{constCountry.isVisible = false
-                        constCountry.isEnabled = false
-                    }
-                    4->{constProfile.isVisible = false
-                        constProfile.isEnabled = false
-                    }
-                    5->{constContact.isVisible = false
-                        constContact.isEnabled = false
-                    }
-                    6->{constRelation.isVisible = false
-                        constRelation.isEnabled = false
-                    }
-                    7->{constConfirm.isVisible = false
-                        constConfirm.isEnabled = false
-                    }
-                    8->{constFinish.isVisible = false
-                        constFinish.isEnabled = false
-                    }
+            when(step){
+                1->{constName.isVisible = false
+                    constName.isEnabled = false
                 }
-
+                2->{constWanted.isVisible = false
+                    constWanted.isEnabled = false
+                }
+                3->{constCountry.isVisible = false
+                    constCountry.isEnabled = false
+                }
+                4->{constProfile.isVisible = false
+                    constProfile.isEnabled = false
+                }
+                5->{constContact.isVisible = false
+                    constContact.isEnabled = false
+                }
+                6->{constRelation.isVisible = false
+                    constRelation.isEnabled = false
+                }
+                7->{constConfirm.isVisible = false
+                    constConfirm.isEnabled = false
+                }
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
                 progress.isVisible = false
                 goStep(step+1)
             }, timeBetweenStep)
@@ -678,10 +774,10 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    private var selectedSex = "none"
-    private var selectedWantedSex = "none"
-    private var profileUrl = "none"
-    private var selectedRelation = "none"
+    private var selectedSex = ""
+    private var selectedWantedSex = ""
+    private var profileUrl = ""
+    private var selectedRelation = ""
     private var selectedLocalisation = ""
     private fun checkValidity(step: Int):Boolean{
         var error = ""
@@ -690,15 +786,22 @@ class EditProfileActivity : AppCompatActivity() {
                 if (edName.text.toString().length<6){
                     error += "\n-Le nom doit contenir au moins 6 caractère"
                 }
-                if (selectedSex=="none"){
+                if (selectedSex.isEmpty()){
                     error+= "\n-vous devez choisir votre sexe (Homme ou Femme) "
                 }
+                if (edAge.text.toString().isEmpty() || edAge.text.toString()=="null"){
+
+                    error+= "\n-vous devez choisir votre Age (au moins 18 ans) "
+                }else if(edAge.text.toString().toInt()<18){
+                    error = "Votre age doit être au minimum de 18 ans pour utiliser cet application"
+                }
+
             }
             2->{
                 if (edWantedAge1.text.toString().isEmpty() || edWantedAge2.text.toString().isEmpty()){
                     error += "\n-vous devez choisir l'age votre de partenaire (exemple: entre 18 et 30 ans)"
                 }
-                if (selectedWantedSex=="none"){
+                if (selectedWantedSex.isEmpty()){
                     error += "\n-vous devez choisir le sexe de partenaire que vous rechercher (Homme ou/et Femme)"
                 }
                 if (edWantedAge1.text.toString().toInt()> edWantedAge2.text.toString().toInt()){
@@ -706,17 +809,21 @@ class EditProfileActivity : AppCompatActivity() {
                     findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText(edWantedAge2.text.toString())
                     findViewById<TextInputLayout>(R.id.edlayoutAgeWanted2).editText!!.setText(c)
                 }
+                if (edWantedAge1.text.toString().toInt()<18){
+                    error += "L'age minimum est de 18 ans, appuyer sur Confirmer a nouveau !"
+                    findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText("18")
+                }
             }
             3->{
                 if (selectedLanguage.isEmpty()){
-                    error+= "\nVous devez choisir les language que vous parler"
+                    error+= "\nVous devez choisir le(s) language(s) que vous parler"
                 }
-                if (selectedLocalisation.isNotEmpty()){
-                    error += "\nVous devez ecrire le nom de votre pays"
+                if (selectedLocalisation.isEmpty()){
+                    error += "\nVous devez selectionner votre pays"
                 }
             }
             4-> {
-                if (profileUrl=="none"){
+                if (profileUrl.isEmpty() && mImageUri==null){
                     error+= "\n-vous devez choisir un image de profile "
                 }
             }
@@ -726,17 +833,31 @@ class EditProfileActivity : AppCompatActivity() {
                             edWhatsapp.text.toString().isNotEmpty())
                     && !checkBoxContact.isChecked){
                     error += "\n-Vous devez accepter la visibilité public des informations que vous avez remplie" +
-                            "\nCocher la case: ${R.string.check1}" +
+                            "\nCocher la case: J'accepte d'être contacter par Email, Messenger ou Whatsapp ..." +
                             "\n\nOu supprimer toute les information dans vos contacte"
                 }
             }
             6-> {
-                if (selectedRelation=="none"){
+                if (selectedRelation.isEmpty()){
                     error+= "\n-vous devez choisir le type de relation que vous rechercher de profile "
                 }
             }
         }
+        if (error.isNotEmpty()){
+            showError(error)
+            return false
+        }
         return true
+    }
+
+    private fun showError(error: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Erreur")
+            .setMessage("Une erreur est survenue:" +
+                    "\n$error" +
+                    "\nCorriger ces erreur puis confirmer")
+            .setPositiveButton("Ok"){_,_->}
+            .create().show()
     }
 
     private fun loadData() {
@@ -757,8 +878,9 @@ class EditProfileActivity : AppCompatActivity() {
         //step 2 : Wanted
         constWanted.isEnabled = true
         edBio.setText(user.userInfo.info!!.bio)
-        edWantedAge1.setText(user.userInfo.searching.age.subSequence(0,1))
-        edWantedAge1.setText(user.userInfo.searching.age.subSequence(2,3))
+        user.userInfo.searching.age
+        edWantedAge1.setText(user.userInfo.searching.age.subSequence(0,2))
+        edWantedAge2.setText(user.userInfo.searching.age.subSequence(3,5))
 
         if (user.userInfo.searching.sexe.contains("Homme")){
             imgWantedMen.performClick()
@@ -776,16 +898,18 @@ class EditProfileActivity : AppCompatActivity() {
                 spinCountry.setSelection(i)
             }
         }
-        if (user.userData.language.contains("Francais")){
+        if (user.userData.language.contains("Français")){
             cardFrench.performClick()
         }
-        if (user.userData.language.contains("English")){
+        if (user.userData.language.contains("Anglais")){
             cardEnglish.performClick()
         }
         constCountry.isEnabled = false
 
         //step 4: Profile
         constProfile.isEnabled = true
+        profileUrl = user.userData.imgProfileUrl
+        mOldImageUrl = profileUrl
         Glide.with(this).clear(imgSelectedProfile)
         Glide.with(this).load(user.userData.imgProfileUrl)
             .into(imgSelectedProfile)
@@ -808,7 +932,7 @@ class EditProfileActivity : AppCompatActivity() {
             "Amour"->cardLove.performClick()
             "Amitie"->cardFriend.performClick()
             "Relation Sexuel"->cardSex.performClick()
-            "Inconnue"->cardUnknown.performClick()
+            else->cardUnknown.performClick()
         }
         constRelation.isEnabled = false
 
@@ -816,5 +940,10 @@ class EditProfileActivity : AppCompatActivity() {
         progress.isVisible = false
         goStep(1)
 
+    }
+
+
+    interface OnFinishEdit{
+        fun onFinishEdit()
     }
 }

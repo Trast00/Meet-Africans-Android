@@ -27,8 +27,8 @@ import com.lnd.RencontreAfricaine.utils.SpinnerAdapter
 
 class DiscoverFragment : Fragment() {
     companion object{
-        val listUser: MutableList<UserData> = mutableListOf()
-        val listUserFiltered: MutableList<UserData> = mutableListOf()
+        var listUser: MutableList<UserData> = mutableListOf()
+        var listUserFiltered: MutableList<UserData> = mutableListOf()
     }
 
 
@@ -73,9 +73,7 @@ class DiscoverFragment : Fragment() {
                     filterChanged()
                 }
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {}
-
         }
 
         spinLocalisation.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
@@ -112,7 +110,7 @@ class DiscoverFragment : Fragment() {
 
         }
 
-        addTestProfile()
+        //addTestProfile()
 
         loadUsers(10)
 
@@ -128,7 +126,7 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun addTestProfile() {
-        val user1  = UserData("id1", "phone1",
+        val user1  = UserData("admin", "phone1",
             "nom1", "prenom1", 99, "Homme", "", "",
             "Marriage", "Mali", "Francais")
 
@@ -148,51 +146,115 @@ class DiscoverFragment : Fragment() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()){
-                        var i=0
-                        for (h0 in snapshot.children){
-                            if (h0.child("userData").child("nom").exists()){
+                        var nbrLoadedUser=0
 
-                                //The user is already loaded
-                                var isNewUser = true
-                                for (user in listUser){
-                                    val newUserID = h0.child("userData").child("id").value.toString()
-                                    if (user.id==newUserID){
-                                         isNewUser = false
+                        //Until we get 10 user
+                        var adminOnly = false
+                        var premiumOnly = true
+                        var contactOnly = false
+                        var profileOnly = false
+                        while (nbrLoadedUser<nbr){
+                            /*For do not garantie we will have 10 user,
+                            because we will first start to ignore all user except premium.
+                            then we ignore all user except those who complete contact information.
+                            then we ignore all user except those who complete profile information.
+                            finally we take all user without exception*/
+                            for ((nbrUserChecked, h0) in snapshot.children.withIndex()){
+                                if (h0.child("userData").child("id").exists()){
+
+                                    //The user is already loaded
+                                    var isNewUser = true
+                                    for (user in listUser){
+                                        val newUserID = h0.child("userData").child("id").value.toString()
+                                        if (user.id==newUserID){
+                                            isNewUser = false
+                                        }
+                                        if (nbrUserChecked.toLong()==snapshot.childrenCount-1){
+                                            nbrLoadedUser = nbr
+                                            break
+                                        }
+                                    }
+                                    if (!isNewUser){ continue }
+
+                                    //we are taking only admins account
+                                    val isAdminAccount = h0.child("userData").child("phone").value.toString()
+                                    if (adminOnly && isAdminAccount!="admin"){ continue }
+
+                                    //we are taking only premium user: but this user is not premium: then ignore him
+                                    val premiumDays = h0.child("userStatue").child("premiumDays").value.toString().toInt()
+                                    if (premiumOnly && premiumDays==0){ continue }
+
+                                    //we are taking only user who have contact
+                                    val haveContact = //true if user have whatsapp, messenger or gmail
+                                        ((h0.child("userInfo").child("contact").child("whatsapp").exists()
+                                                && h0.child("userInfo").child("contact").child("whatsapp").value.toString().isNotEmpty())
+                                                || (h0.child("userInfo").child("contact").child("messenger").exists()
+                                                && h0.child("userInfo").child("contact").child("messenger").value.toString().isNotEmpty())
+                                                || (h0.child("userInfo").child("contact").child("gmail").exists()
+                                                && h0.child("userInfo").child("contact").child("gmail").value.toString().isNotEmpty()))
+
+                                    if (contactOnly && !haveContact){ continue }
+
+                                    //we are taking only user who completed profile: every user who complete profile have this data
+                                    val completedProfile = h0.child("userInfo").child("searching").child("sexe").exists()
+                                    if (profileOnly && !completedProfile){ continue }
+
+                                    //The user respect the filter
+                                    if(filterLocalisation.isNotEmpty() || filterSex.isNotEmpty()
+                                        || filterRelation.isNotEmpty()){
+                                        if(filterSex!=h0.child("userData").child("sexe").value.toString()){continue}
+                                        if(filterLocalisation!=h0.child("userData").child("localisation").value.toString()){continue}
+                                        if(filterRelation!=h0.child("userData").child("relation").value.toString()){continue}
+                                    }
+
+                                    //load the user data
+                                    val h1 = h0.child("userData")
+                                    val id = h0.key.toString()
+                                    val phone = h1.child("phone").value.toString()
+                                    val nom = h1.child("nom").value.toString().trim()
+                                    val prenom = h1.child("prenom").value.toString().trim()
+                                    val age = h1.child("age").value.toString().toInt()
+                                    val sexe = h1.child("sexe").value.toString()
+                                    val mdp = h1.child("mdp").value.toString()
+                                    val imgProfileUrl = h1.child("imgProfileUrl").value.toString()
+
+                                    val relation = h1.child("relation").value.toString()
+                                    val localisation = h1.child("localisation").value.toString()
+                                    val language = h1.child("language").value.toString()
+
+                                    val userData = UserData(id, phone, nom, prenom, age, sexe, mdp, imgProfileUrl, relation, localisation, language)
+                                    listUser.add(userData)
+                                    listUserFiltered.add(userData)
+                                    nbrLoadedUser++
+
+                                    //we finish load enough user
+                                    if (nbrLoadedUser==nbr){
+                                        break
                                     }
                                 }
-                                if (!isNewUser){ continue }
+                        }
 
-                                //The user respect the filter
-                                if(filterLocalisation.isNotEmpty() || filterSex.isNotEmpty()
-                                    || filterRelation.isNotEmpty()){
-                                    if(filterSex!=h0.child("userData").child("sexe").value.toString()){continue}
-                                    if(filterLocalisation!=h0.child("userData").child("localisation").value.toString()){continue}
-                                    if(filterRelation!=h0.child("userData").child("relation").value.toString()){continue}
-                                }
-
-                                //load the user data
-                                val h1 = h0.child("userData")
-                                val id = h0.key.toString()
-                                val phone = h1.child("phone").value.toString()
-                                val nom = h1.child("nom").value.toString()
-                                val prenom = h1.child("prenom").value.toString()
-                                val age = h1.child("age").value.toString().toInt()
-                                val sexe = h1.child("sexe").value.toString()
-                                val mdp = h1.child("mdp").value.toString()
-                                val imgProfileUrl = h1.child("imgProfileUrl").value.toString()
-
-                                val relation = h1.child("relation").value.toString()
-                                val localisation = h1.child("localisation").value.toString()
-                                val language = h1.child("language").value.toString()
-
-                                val userData = UserData(id, phone, nom, prenom, age, sexe, mdp, imgProfileUrl, relation, localisation, language)
-                                listUser.add(userData)
-                                listUserFiltered.add(userData)
-                                i++
-                                if (i==nbr){
-                                    break
-                                }
+                            //If we load all user of database
+                            if (listUser.size.toLong()==snapshot.childrenCount){
+                                break
                             }
+                            //we finish load but don't have enough user: because we took only premium
+                            if (adminOnly){
+                                adminOnly = false
+                                premiumOnly = true
+                            }
+                            else if (premiumOnly){
+                                premiumOnly= false
+                                contactOnly= true
+                            }
+                            else if(contactOnly){
+                                contactOnly= false
+                                profileOnly = true
+                            }
+                            else{
+                                profileOnly=false
+                            }
+
                         }
                         recyclerProfile.adapter?.notifyDataSetChanged()
                         btnShowMore.isVisible = true
@@ -212,7 +274,6 @@ class DiscoverFragment : Fragment() {
     private var filterLocalisation =""
     private var filterRelation = ""
     fun filterChanged(){
-        Toast.makeText(context, "Filtre: $filterSex $filterLocalisation $filterRelation", Toast.LENGTH_LONG).show()
         listUserFiltered.clear()
         for ((i, userData) in listUser.withIndex()){
             if (filterSex.isNotEmpty() && userData.sexe!= filterSex){continue}

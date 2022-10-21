@@ -8,32 +8,71 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
+        android:id="@+id/appBar"
         android:layout_height="98dp"
-        android:background="@drawable/tabbackground"
-        android:theme="@style/Theme.RencontreAfricaine.AppBarOverlay">
+        android:background="@drawable/tabbackground">
 
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            app:tabTextColor="@color/white"
-            android:background="@null"
-            app:tabIndicatorGravity="bottom"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white"
-            app:tabIndicatorHeight="3dp"
-            android:layout_gravity="bottom"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="?actionBarSize"
+                android:visibility="invisible"
+                android:padding="@dimen/appbar_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imgKeyMenuItem"
+                android:src="@drawable/iconskey_white"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="65dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/txtNbrKeyMenuItem"
+                android:text="0"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:layout_marginEnd="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imgKeyMenuItem"
+                app:layout_constraintBottom_toBottomOf="@id/imgKeyMenuItem"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbarMain"
+                app:title="Rencontre Africaine"
+                app:titleTextColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!--androidx.appcompat.widget.Toolbar -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                app:tabTextColor="@color/white"
+                android:background="@null"
+                app:tabIndicatorGravity="bottom"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="3dp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2

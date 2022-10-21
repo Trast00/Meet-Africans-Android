@@ -25,7 +25,7 @@
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="@color/text_black"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="230dp"
         android:layout_marginStart="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -35,8 +35,8 @@
         android:layout_height="0dp"
         android:id="@+id/constName"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="280dp"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:hint="Nom d'utilisateur"
             app:startIconDrawable="@drawable/iconsuser"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPhone"
             android:layout_width="0dp"
             android:layout_marginTop="30dp"
@@ -81,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edAge"
-                android:inputType="textPassword"
+                android:inputType="number"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,8 +125,9 @@
         android:layout_height="0dp"
         android:id="@+id/constWant"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="280dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -235,7 +235,7 @@
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:id="@+id/imgMenWanted"
             android:src="@drawable/men_no"
             android:layout_marginTop="5dp"
@@ -245,7 +245,7 @@
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:id="@+id/imgWomenWanted"
             android:src="@drawable/women_no"
             android:layout_marginTop="5dp"
@@ -260,13 +260,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/constCountry"
-        android:layout_marginTop="300dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:visibility="invisible"
+        android:layout_marginTop="280dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
 
         <Spinner
             android:layout_width="350dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:id="@+id/spinnerCountry"
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -278,15 +280,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtno6"
             android:text="Quel langue parler vous ?"
-            android:layout_marginTop="30dp"
+            android:textColor="@color/text_black"
+            android:layout_marginTop="15dp"
             app:layout_constraintTop_toBottomOf="@id/spinnerCountry"
             app:layout_constraintStart_toStartOf="@id/spinnerCountry"/>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="60dp"
             android:id="@+id/cardFrench"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             android:layout_marginTop="15dp"
             app:layout_constraintTop_toBottomOf="@id/txtno6"
             app:layout_constraintStart_toStartOf="@id/txtno6">
@@ -312,10 +315,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="60dp"
             android:id="@+id/cardEnglish"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
             app:layout_constraintTop_toBottomOf="@id/txtno6"
@@ -346,6 +349,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtno7"
             android:text="Je parle:"
+            android:textColor="@color/text_black"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="@id/cardFrench"
@@ -372,10 +376,9 @@
         android:layout_height="0dp"
         android:id="@+id/constProfile"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginTop="280dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
         <ImageView
             android:layout_width="150dp"
@@ -409,8 +412,9 @@
         android:layout_height="0dp"
         android:id="@+id/constContact"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="280dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
         <TextView
             android:layout_width="match_parent"
@@ -418,7 +422,7 @@
             android:id="@+id/txtWarning"
             android:text="@string/warning1"
             android:textColor="@color/text_red"
-            android:layout_margin="15dp"
+            android:layout_margin="8dp"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -439,8 +443,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:drawableStart="@drawable/iconsgmail"
-                android:drawablePadding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="50dp"
                 android:id="@+id/edGmail"
                 android:inputType="text"
                 />
@@ -450,7 +456,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
             android:hint="Messenger "
-            app:suffixText="ans"
+            app:endIconMode="clear_text"
             android:id="@+id/edlayoutMessenger"
             android:layout_width="0dp"
             android:layout_marginTop="8dp"
@@ -463,18 +469,20 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:drawablePadding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="50dp"
                 android:id="@+id/edMessenger"
-                android:drawableStart="@drawable/iconsmessenger"
-                android:inputType="textPassword"
+                android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
-            android:hint="whatsapp "
-            app:suffixText="ans"
+            android:hint="whatsapp (+223 94369703)"
+            app:endIconMode="clear_text"
             android:id="@+id/edlayoutWhatssap"
             android:layout_width="0dp"
             android:layout_marginTop="8dp"
@@ -487,12 +495,41 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:drawablePadding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="50dp"
                 android:id="@+id/edWhatsapp"
-                android:drawableStart="@drawable/iconswhatsapp"
                 android:inputType="phone"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/iconsgmail"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/edlayoutGmail"
+            app:layout_constraintBottom_toBottomOf="@id/edlayoutGmail"
+            app:layout_constraintStart_toStartOf="@id/edlayoutGmail"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/iconsmessenger"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/edlayoutMessenger"
+            app:layout_constraintBottom_toBottomOf="@id/edlayoutMessenger"
+            app:layout_constraintStart_toStartOf="@id/edlayoutMessenger"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/iconswhatsapp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/edlayoutWhatssap"
+            app:layout_constraintBottom_toBottomOf="@id/edlayoutWhatssap"
+            app:layout_constraintStart_toStartOf="@id/edlayoutWhatssap"/>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -515,10 +552,9 @@
         android:layout_height="0dp"
         android:id="@+id/constRelation"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="280dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
         <TextView
             android:layout_width="wrap_content"
@@ -528,7 +564,7 @@
             android:textColor="@color/text_purple"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -539,7 +575,7 @@
             android:layout_height="60dp"
             android:id="@+id/cardMariage"
             android:layout_margin="15dp"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/txtNo2"
             app:layout_constraintStart_toStartOf="parent"
             >
@@ -553,7 +589,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mariage"
+                android:text="Marriage"
+                android:textColor="@color/text_black"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -563,7 +600,7 @@
             android:layout_height="60dp"
             android:id="@+id/cardRelationSerieus"
             android:layout_margin="15dp"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cardMariage"
             app:layout_constraintStart_toStartOf="parent"
             >
@@ -578,6 +615,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Relation Serieuse"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/text_black"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -588,7 +627,7 @@
             android:layout_height="60dp"
             android:id="@+id/cardLove"
             android:layout_margin="15dp"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cardRelationSerieus"
             app:layout_constraintStart_toStartOf="parent"
             >
@@ -602,7 +641,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Relation Serieuse"
+                android:text="Amour"
+                android:textColor="@color/text_black"
+                android:layout_marginStart="8dp"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -612,7 +653,7 @@
             android:layout_height="60dp"
             android:id="@+id/cardFriend"
             android:layout_margin="15dp"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/txtNo2"
             app:layout_constraintStart_toEndOf="@id/cardMariage"
             >
@@ -627,6 +668,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Amitié"
+                android:textColor="@color/text_black"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -635,7 +677,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:id="@+id/cardSex"
-            android:backgroundTint="@color/disabled_background"
+            android:backgroundTint="@color/white"
             android:layout_margin="15dp"
             app:layout_constraintTop_toBottomOf="@id/cardMariage"
             app:layout_constraintStart_toEndOf="@id/cardRelationSerieus"
@@ -651,6 +693,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Relation Sexuel"
+                android:textColor="@color/text_black"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -661,7 +704,6 @@
             android:layout_height="60dp"
             android:id="@+id/cardUnknown"
             android:layout_margin="15dp"
-
             app:layout_constraintTop_toBottomOf="@id/cardRelationSerieus"
             app:layout_constraintStart_toEndOf="@id/cardLove"
             >
@@ -676,6 +718,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Inconnue"
+                android:textColor="@color/text_black"
                 android:layout_gravity="center"
                 />
         </androidx.cardview.widget.CardView>
@@ -693,17 +736,18 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtSeeking"
             android:layout_marginTop="25dp"
             android:layout_marginStart="15dp"
+            android:layout_marginEnd="8dp"
             android:text="Inconnue"
             android:textStyle="bold"
             android:textColor="@color/text_purple"
             app:layout_constraintTop_toBottomOf="@id/cardLove"
             app:layout_constraintStart_toEndOf="@id/txtno3"
-            />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -711,11 +755,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/constConfirm"
-        android:visibility="invisible"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="100dp"
+        android:visibility="visible"
+        android:layout_marginTop="280dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -743,6 +786,7 @@
                     android:layout_width="150dp"
                     android:layout_height="200dp"
                     android:id="@+id/imgProfile"
+                    android:scaleType="centerCrop"
                     android:background="@color/purple_200"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -778,6 +822,7 @@
                     android:id="@+id/txtIsOnline"
                     android:text="En ligne"
                     android:textSize="12sp"
+                    android:visibility="invisible"
                     android:layout_marginEnd="5dp"
                     android:layout_marginTop="3dp"
                     app:layout_constraintTop_toBottomOf="@id/imgProfile"
@@ -859,31 +904,43 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtgmail"
             android:text="lnd.afriqueapp@gmail.com"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgnoGmail"
             app:layout_constraintTop_toTopOf="@id/imgnoGmail"
             app:layout_constraintBottom_toBottomOf="@id/imgnoGmail"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtwhatsapp"
             android:text="+223 56492135"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgnoGmail"
             app:layout_constraintTop_toTopOf="@id/imgnoWhatsapp"
             app:layout_constraintBottom_toBottomOf="@id/imgnoWhatsapp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtmessenger"
             android:text="dicko.allassane123"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgnoGmail"
             app:layout_constraintTop_toTopOf="@id/imgnoMessenger"
             app:layout_constraintBottom_toBottomOf="@id/imgnoMessenger"/>
@@ -896,18 +953,21 @@
             android:textColor="@color/text_red"
             android:textStyle="bold"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgnoMessenger"
             app:layout_constraintStart_toEndOf="@id/cardProfil"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txtInfo1"
             android:text="@string/txt2"
             android:textColor="@color/text_purple"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
             app:layout_constraintTop_toBottomOf="@id/cardProfil"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -919,11 +979,9 @@
         android:layout_height="0dp"
         android:id="@+id/constFinish"
         android:visibility="invisible"
-
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="280dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -966,8 +1024,8 @@
         android:layout_height="80dp"
         android:id="@+id/btnConfirm"
         android:src="@drawable/btnconfirm"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@id/constName"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
@@ -976,9 +1034,9 @@
         android:layout_height="60dp"
         android:id="@+id/btnback"
         android:src="@drawable/btnback"
-        android:layout_marginTop="38dp"
-        app:layout_constraintTop_toBottomOf="@id/constName"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/btnConfirm"
+        app:layout_constraintTop_toTopOf="@id/btnConfirm"
         />
 
     <ProgressBar

@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId "com.lnd.RencontreAfricaine"
-        minSdk 21
+        minSdk 23
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

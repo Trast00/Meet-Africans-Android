@@ -21,6 +21,7 @@
                 android:layout_width="180dp"
                 android:layout_height="250dp"
                 android:id="@+id/imgProfileDetail"
+                android:scaleType="centerCrop"
                 android:background="@color/purple_200"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -133,6 +134,7 @@
                 android:id="@+id/txtno1"
                 android:text="Rechercher"
                 android:textSize="20sp"
+                android:textColor="@color/text_black"
                 android:layout_marginTop="25dp"
                 app:layout_constraintTop_toBottomOf="@id/imgProfileDetail"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -141,17 +143,19 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:id="@+id/imgSexWanted"
-                android:src="@drawable/iconsmen"
+                android:src="@drawable/iconsmenwomencolored"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/txtno1"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintEnd_toStartOf="@id/txtSexWanted"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtSexWanted"
-                android:text="Homme"
-                app:layout_constraintStart_toEndOf="@+id/imgSexWanted"
+                android:text="Homme/Femme"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toEndOf="@+id/txtRelationWanted"
+                app:layout_constraintEnd_toStartOf="@id/txtAgeWanted"
                 app:layout_constraintTop_toTopOf="@id/imgSexWanted"
                 app:layout_constraintBottom_toBottomOf="@id/imgSexWanted"/>
 
@@ -159,32 +163,84 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtAgeWanted"
-                android:text="20 - 31 ans"
+                android:text="18 - 99 ans"
+                android:textColor="@color/text_black"
                 app:layout_constraintStart_toEndOf="@+id/txtSexWanted"
-                app:layout_constraintEnd_toStartOf="@id/txtRelationWanted"
-                app:layout_constraintTop_toTopOf="@id/imgSexWanted"
-                app:layout_constraintBottom_toBottomOf="@id/imgSexWanted"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txtRelationWanted"
+                app:layout_constraintBottom_toBottomOf="@id/txtRelationWanted"/>
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:id="@+id/imgRelationWanted"
-                android:src="@drawable/iconsring"
+                android:src="@drawable/iconsunknown"
                 android:layout_marginEnd="3dp"
-                app:layout_constraintEnd_toStartOf="@id/txtRelationWanted"
-                app:layout_constraintTop_toTopOf="@id/imgSexWanted"
-                app:layout_constraintBottom_toBottomOf="@id/imgSexWanted"/>
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtno1"
+                />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtRelationWanted"
-                android:text="Marraige"
+                android:text="Unknown"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imgSexWanted"
-                app:layout_constraintBottom_toBottomOf="@id/imgSexWanted"/>
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toEndOf="@id/imgRelationWanted"
+                app:layout_constraintTop_toTopOf="@id/imgRelationWanted"
+                app:layout_constraintBottom_toBottomOf="@id/imgRelationWanted"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/constBio"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@id/txtno1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bio"
+                    android:id="@+id/txtno2"
+                    android:textColor="@color/text_black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_height="wrap_content"
+                    android:hint="Biographie"
+                    android:id="@+id/edlayoutBioDetail"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtno2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="110dp"
+                        android:id="@+id/edBioDetail"
+                        android:text=""
+                        android:inputType="textMultiLine"
+                        android:gravity="top|start"
+                        android:freezesText="true"
+                        android:imeOptions="actionNext"
+                        android:nextFocusDown="@null"
+                        android:ellipsize="end"
+                        android:selectAllOnFocus="true"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -192,9 +248,12 @@
                 android:id="@+id/txtBtnDescription"
                 android:text="@string/string3"
                 android:gravity="center"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="30dp"
                 android:textColor="@color/text_purple"
                 app:layout_constraintBottom_toTopOf="@id/btnContactDetail"
+                app:layout_constraintTop_toBottomOf="@id/constBio"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -209,7 +268,9 @@
                 android:drawableStart="@drawable/iconskeybtn"
                 android:background="@drawable/backgroundbtn"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtBtnDescription"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

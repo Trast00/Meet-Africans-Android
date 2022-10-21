@@ -20,7 +20,6 @@
                 android:layout_height="250dp"
                 android:id="@+id/imgProfileItemProfile"
                 android:src="@color/purple_200"
-                android:background="@color/purple_200"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"/>
 

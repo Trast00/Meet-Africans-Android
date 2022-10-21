@@ -40,9 +40,8 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content"
-            android:hint="Numero de telephone"
+            android:hint="Numero de telephone (+223 93 36 xx xx)"
             app:startIconDrawable="@drawable/iconsphone"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPhone"
             android:layout_width="0dp"
             android:layout_marginTop="30dp"
@@ -156,7 +155,6 @@
             android:layout_height="wrap_content"
             android:hint="Numero de telephone"
             app:startIconDrawable="@drawable/iconsphone"
-            app:prefixText="+223"
             android:id="@+id/edlayoutPhoneConnexion"
             android:layout_width="0dp"
             android:layout_marginTop="30dp"

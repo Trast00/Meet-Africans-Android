@@ -5,17 +5,18 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.cache.DiskCache
 import com.lnd.RencontreAfricaine.ChatActivity
 import com.lnd.RencontreAfricaine.R
-import com.lnd.RencontreAfricaine.UserChats
+import com.lnd.RencontreAfricaine.UserChat
 
-class DiscussionAdapter(val context: Context, private val listRec : MutableList<UserChats>): RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
+class DiscussionAdapter(val context: Context, private val listRec : MutableList<UserChat>): RecyclerView.Adapter<DiscussionAdapter.ViewHolder>() {
     class ViewHolder(private val itemView: View) : RecyclerView.ViewHolder(itemView) {
         val const = itemView.findViewById<ConstraintLayout>(R.id.constItemDiscussion)
         val imgProfile = itemView.findViewById<ImageView>(R.id.imgProfileItemDiscussion)
@@ -34,7 +35,9 @@ class DiscussionAdapter(val context: Context, private val listRec : MutableList<
         val userChat = listRec[position]
         Glide.with(context).clear(holder.imgProfile)
         Glide.with(context).load(userChat.imgProfile)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(holder.imgProfile)
+
 
         holder.txtName.text = userChat.name
         holder.txtLastMessage.text = userChat.lastMessage
