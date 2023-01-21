@@ -10,8 +10,8 @@
 
 ## Built With 
 - Kotlin
-- Android Studio
 - XML
+- Android Studio
 - Adobe XD (for the design)
 
 ## Preview
@@ -28,16 +28,16 @@
 
 👤 **Dicko Allasane**
 
-- GitHub: [@githubhandle](https://github.com/Trast00)
-- Twitter: [@twitterhandle](https://twitter.com/AllassaneDicko0/)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/allassane-dicko-744aaa224)
+- GitHub: [@Trast00](https://github.com/Trast00)
+- Twitter: [@dickoallassane](https://twitter.com/AllassaneDicko0/)
+- LinkedIn: [dickoallassane](https://www.linkedin.com/in/allassane-dicko-744aaa224)
 
 
 ## 🔭 Future Features <a name="future-features"></a>
 **All these features should be created in the event section**
-- [ ] **[Chat Group: where all connected user can discuss together]**
-- [ ] **[Personality test: to match up user by their answer to questions]**
-- [ ] **[Notification system: Add a functional notification system]**
+- [ ] **Chat Group: where all connected user can discuss together**
+- [ ] **Personality test: to match up user by their answer to questions**
+- [ ] **Notification system: Add a functional notification system**
 
 
 
