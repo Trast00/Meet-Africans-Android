@@ -15,11 +15,11 @@
             android:scrollbars="vertical"
             android:nestedScrollingEnabled="true">
             <Spinner
-                android:layout_width="120dp"
+                android:layout_width="110dp"
                 android:layout_height="40dp"
                 android:id="@+id/spinnerSex"
                 tools:listitem="@layout/itemspinner"
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +27,11 @@
                 />
 
             <Spinner
-                android:layout_width="120dp"
+                android:layout_width="110dp"
                 android:layout_height="40dp"
                 android:id="@+id/spinnerLocalisation"
                 tools:listitem="@layout/itemspinner"
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/spinnerRelation"
@@ -39,11 +39,11 @@
                 />
 
             <Spinner
-                android:layout_width="120dp"
+                android:layout_width="110dp"
                 android:layout_height="40dp"
                 android:id="@+id/spinnerRelation"
                 tools:listitem="@layout/itemspinner"
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

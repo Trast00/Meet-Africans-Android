@@ -225,7 +225,7 @@ class DiscoverFragment : Fragment() {
                                     val userData = UserData(id, phone, nom, prenom, age, sexe, mdp, imgProfileUrl, relation, localisation, language)
                                     listUser.add(userData)
                                     listUserFiltered.add(userData)
-                                    nbrLoadedUser++
+
 
                                     //we finish load enough user
                                     if (nbrLoadedUser==nbr){
@@ -234,10 +234,7 @@ class DiscoverFragment : Fragment() {
                                 }
                         }
 
-                            //If we load all user of database
-                            if (listUser.size.toLong()==snapshot.childrenCount){
-                                break
-                            }
+
                             //we finish load but don't have enough user: because we took only premium
                             if (adminOnly){
                                 adminOnly = false
@@ -251,10 +248,10 @@ class DiscoverFragment : Fragment() {
                                 contactOnly= false
                                 profileOnly = true
                             }
+                            //If we load all user of database
                             else{
-                                profileOnly=false
+                                break
                             }
-
                         }
                         recyclerProfile.adapter?.notifyDataSetChanged()
                         btnShowMore.isVisible = true

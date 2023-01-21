@@ -25,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/const1"
-        android:paddingTop="15dp"
         app:layout_constraintTop_toBottomOf="@id/txtTitle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtmarriage"
                 android:text="Mariage"
                 android:textColor="@color/text_black"
                 android:layout_marginStart="8dp"
@@ -83,6 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtrs"
                 android:text="Relation \n Serieuse"
                 android:textColor="@color/text_black"
                 android:layout_marginTop="8dp"
@@ -94,6 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtlove"
                 android:text="Amour"
                 android:textColor="@color/text_black"
                 android:layout_marginStart="8dp"
@@ -142,10 +144,10 @@
                 android:layout_height="30dp"
                 android:id="@+id/imgHeartYellow"
                 android:src="@drawable/iconsfriend"
-                android:layout_marginEnd="70dp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/txtrs"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/imgFlower"
-                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <ImageView
@@ -153,10 +155,10 @@
                 android:layout_height="30dp"
                 android:id="@+id/imgSexe"
                 android:src="@drawable/iconssex"
-                android:layout_marginEnd="70dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintBottom_toTopOf="@id/imgHeart"
                 app:layout_constraintTop_toBottomOf="@id/imgRing"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txtrs"
                 />
 
             <ImageView
@@ -165,10 +167,10 @@
                 android:id="@+id/imgUnknown"
                 android:src="@drawable/iconsunknown"
                 android:layout_marginBottom="30dp"
-                android:layout_marginEnd="70dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imgFlower"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txtrs"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,9 +179,9 @@
 
         <ImageView
             android:id="@+id/cardgirl"
-            android:layout_width="180dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="160dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/cardgirl_tuto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -190,7 +192,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/const2"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="50dp"
@@ -366,10 +368,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnStart"
         android:src="@drawable/btnstart"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@id/const3"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,8 +44,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager2.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager2){tab, position ->
-            when(position){
-                0->{tab.text = "Disc."}
+            when(position){0->{tab.text = "Disc."}
                 1->{tab.text = "Event"}
                 2->{tab.text = "Chats"}
             }

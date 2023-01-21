@@ -798,18 +798,21 @@ class EditProfileActivity : AppCompatActivity() {
 
             }
             2->{
+
                 if (edWantedAge1.text.toString().isEmpty() || edWantedAge2.text.toString().isEmpty()){
                     error += "\n-vous devez choisir l'age votre de partenaire (exemple: entre 18 et 30 ans)"
                 }
                 if (selectedWantedSex.isEmpty()){
                     error += "\n-vous devez choisir le sexe de partenaire que vous rechercher (Homme ou/et Femme)"
                 }
-                if (edWantedAge1.text.toString().toInt()> edWantedAge2.text.toString().toInt()){
+                if ( edWantedAge1.text.toString().isNotEmpty() && edWantedAge2.text.toString().isNotEmpty()
+                        && (edWantedAge1.text.toString().toInt()> edWantedAge2.text.toString().toInt())){
                     val c = edWantedAge1.text.toString()
                     findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText(edWantedAge2.text.toString())
                     findViewById<TextInputLayout>(R.id.edlayoutAgeWanted2).editText!!.setText(c)
                 }
-                if (edWantedAge1.text.toString().toInt()<18){
+                if (edWantedAge1.text.toString().isNotEmpty()
+                    && edWantedAge1.text.toString().toInt()<18){
                     error += "L'age minimum est de 18 ans, appuyer sur Confirmer a nouveau !"
                     findViewById<TextInputLayout>(R.id.edlayoutAgeWanted1).editText!!.setText("18")
                 }
