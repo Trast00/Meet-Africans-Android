@@ -24,7 +24,7 @@
 </p>
 
 
-## Authors
+## Author
 
 👤 **Dicko Allasane**
 
