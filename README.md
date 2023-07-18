@@ -23,6 +23,8 @@
 <img alt="" width="32%" src="https://user-images.githubusercontent.com/74411135/207545677-bcd26bc3-df0b-4c12-b381-70e70df0b94f.png" /> 
 </p>
 
+![image](https://github.com/Trast00/Meet-Africans-Android/assets/74411135/3c524f53-430b-4f4a-83e1-ed6ff44f2ad0)
+
 
 ## Author
 
